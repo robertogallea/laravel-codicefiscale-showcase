@@ -104,6 +104,19 @@ return [
         'code_label' => 'Codice dimostrativo',
     ],
 
+    'birth_date_resolver' => [
+        'heading' => 'Risoluzione dell\'anno di nascita',
+        'tagline' => 'L\'anno di nascita a due cifre di un codice fiscale è per natura ambiguo — "26" potrebbe significare 1926 o 2026. Modifica i valori qui sotto per vedere come il resolver predefinito sceglie tra i due candidati, e quando non riesce a farlo.',
+        'month_label' => 'Mese',
+        'day_label' => 'Giorno',
+        'two_digit_year_label' => 'Anno a due cifre',
+        'max_age_label' => 'Età massima plausibile',
+        'possible_years_label' => 'Anni possibili',
+        'resolved_date_label' => 'Data di nascita risolta',
+        'no_plausible_date' => 'Nessuna data plausibile — nessuno dei due candidati soddisfa l\'età massima, oppure entrambi cadono dopo oggi.',
+        'tiebreak_note' => 'Quando entrambi i candidati sono altrimenti ugualmente plausibili, il resolver controlla anche la storia del luogo di nascita: un luogo valido esattamente a una delle due date candidate risolve la parità. Prova a cambiare il luogo di nascita per vederlo in azione.',
+    ],
+
     'breakdown' => [
         'surname' => 'Codice cognome — le prime tre consonanti del cognome.',
         'name' => 'Codice nome — tre lettere prese dal nome.',

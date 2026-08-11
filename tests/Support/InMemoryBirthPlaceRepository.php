@@ -39,6 +39,13 @@ final class InMemoryBirthPlaceRepository implements BirthPlaceRepository
             // "never existed" (A999, not in this list at all) from
             // "existed, wrong date".
             new ForeignBirthPlace(BirthPlaceCode::from('Z999'), 'Nuova Nazione', CountryCode::from('ZZZ'), new \DateTimeImmutable('1990-01-01')),
+            // The mirror image of Z999: valid only long ago, ceased to
+            // exist (merged/abolished) before today - needed to exercise
+            // DefaultBirthDateResolver's birthplace-history tiebreak,
+            // which can only ever prefer an OLDER of two otherwise-
+            // plausible candidates when a birthplace is valid at exactly
+            // that older date and not the younger one.
+            new DomesticBirthPlace(BirthPlaceCode::from('Y001'), 'Comune Storico', 'ZZ', '999999', $epoch, new \DateTimeImmutable('1950-01-01')),
         ];
     }
 

@@ -2,13 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Support\BirthPlaceOptionSearcher;
 use App\Support\ValidationErrorPresenter;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Robertogallea\CodiceFiscale\CodiceFiscale;
-use Robertogallea\CodiceFiscale\Contracts\BirthPlace;
 use Robertogallea\CodiceFiscale\Contracts\BirthPlaceRepository;
 use Robertogallea\CodiceFiscale\Data\BirthPlaceCode;
 use Robertogallea\CodiceFiscale\Data\PartialPerson;
@@ -23,8 +23,6 @@ use Robertogallea\CodiceFiscale\Validation\Validator;
 
 class HeroTool extends Component
 {
-    private const BIRTH_PLACE_RESULTS_LIMIT = 10;
-
     public string $mode = 'calculate';
 
     public string $firstName = '';
@@ -79,14 +77,14 @@ class HeroTool extends Component
 
     /**
      * Options for the Calculate birthplace combobox. See
-     * searchBirthPlaces() for the deduplication this relies on.
+     * BirthPlaceOptionSearcher for the deduplication this relies on.
      *
      * @return list<array{code: string, label: string}>
      */
     #[Computed]
     public function birthPlaceOptions(): array
     {
-        return $this->searchBirthPlaces($this->birthPlaceQuery);
+        return BirthPlaceOptionSearcher::search($this->repository(), $this->birthPlaceQuery);
     }
 
     /**
@@ -100,7 +98,7 @@ class HeroTool extends Component
     #[Computed]
     public function matchBirthPlaceOptions(): array
     {
-        return $this->searchBirthPlaces($this->matchBirthPlaceQuery);
+        return BirthPlaceOptionSearcher::search($this->repository(), $this->matchBirthPlaceQuery);
     }
 
     public function generate(): void
@@ -232,35 +230,6 @@ class HeroTool extends Component
         return view('livewire.hero-tool');
     }
 
-    /**
-     * @return list<array{code: string, label: string}>
-     */
-    private function searchBirthPlaces(string $query): array
-    {
-        if (trim($query) === '') {
-            return [];
-        }
-
-        $repository = $this->repository();
-        $places = $repository->search($query, limit: self::BIRTH_PLACE_RESULTS_LIMIT);
-
-        $seenCodes = [];
-        $options = [];
-
-        foreach ($places as $place) {
-            $code = $place->code()->value();
-
-            if (isset($seenCodes[$code])) {
-                continue;
-            }
-
-            $seenCodes[$code] = true;
-            $options[] = ['code' => $code, 'label' => $this->optionLabel($place)];
-        }
-
-        return $options;
-    }
-
     private function repository(): BirthPlaceRepository
     {
         return app(BirthPlaceRepository::class);
@@ -271,11 +240,6 @@ class HeroTool extends Component
         $this->decodeInput = $code;
         $this->mode = 'decode';
         $this->decode();
-    }
-
-    private function optionLabel(BirthPlace $place): string
-    {
-        return "{$place->name()} ({$place->code()->value()})";
     }
 
     private function statusFor(PersonField $field, MatchResult $result): string

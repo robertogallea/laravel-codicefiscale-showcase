@@ -108,6 +108,19 @@ return [
         'code_label' => 'Demonstration code',
     ],
 
+    'birth_date_resolver' => [
+        'heading' => 'Birth-year resolution playground',
+        'tagline' => 'A codice fiscale\'s two-digit birth year is inherently ambiguous — "26" could mean 1926 or 2026. Adjust the inputs below to see how the default resolver picks between the two candidates, and when it can\'t.',
+        'month_label' => 'Month',
+        'day_label' => 'Day',
+        'two_digit_year_label' => 'Two-digit year',
+        'max_age_label' => 'Maximum plausible age',
+        'possible_years_label' => 'Possible years',
+        'resolved_date_label' => 'Resolved birth date',
+        'no_plausible_date' => 'No plausible date — neither candidate satisfies the maximum age, or both fall after today.',
+        'tiebreak_note' => 'When both candidates are otherwise equally plausible, the resolver also checks birthplace history: a birthplace valid at exactly one of the two candidate dates settles the tie. Try switching the birthplace to see this in action.',
+    ],
+
     'breakdown' => [
         'surname' => 'Surname code — the first three consonants of the surname.',
         'name' => 'Name code — three letters taken from the first name.',

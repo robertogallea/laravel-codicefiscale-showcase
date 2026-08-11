@@ -57,3 +57,11 @@ it('filters era-records by date, returning only the one valid then', function ()
     expect($results)->toHaveCount(1)
         ->and($results[0]->province())->toBe('XX');
 });
+
+it('finds a place valid only long ago, ceased to exist before today', function () {
+    $code = BirthPlaceCode::from('Y001');
+
+    expect($this->repository->find($code, new DateTimeImmutable('1900-01-01')))->not->toBeNull()
+        ->and($this->repository->find($code))->toBeNull()
+        ->and($this->repository->existedEver($code))->toBeTrue();
+});

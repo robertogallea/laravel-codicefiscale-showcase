@@ -75,6 +75,29 @@ return [
         ],
     ],
 
+    'omocodia' => [
+        'heading' => 'Omocodia playground',
+        'tagline' => 'When two people would generate the same code, the Agenzia delle Entrate resolves the collision by substituting some of 7 fixed digit positions with letters. Toggle any of them to see a real, equivalent variant.',
+        'code_label' => 'Codice fiscale',
+        'load' => 'Load',
+        'invalid_format' => 'This is not a well-formed codice fiscale (wrong length or characters).',
+        'canonical_form' => 'Canonical form',
+        'level' => 'Substitution level',
+        'variant' => 'Variant code',
+        'equivalent' => 'Equivalent to canonical form',
+        'yes' => 'Yes',
+        'no' => 'No',
+        'positions' => [
+            'year_1' => 'Year (1st digit)',
+            'year_2' => 'Year (2nd digit)',
+            'day_1' => 'Day (1st digit)',
+            'day_2' => 'Day (2nd digit)',
+            'birthplace_1' => 'Birthplace code (1st digit)',
+            'birthplace_2' => 'Birthplace code (2nd digit)',
+            'birthplace_3' => 'Birthplace code (3rd digit)',
+        ],
+    ],
+
     'breakdown' => [
         'surname' => 'Surname code — the first three consonants of the surname.',
         'name' => 'Name code — three letters taken from the first name.',

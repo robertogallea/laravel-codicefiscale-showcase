@@ -71,6 +71,29 @@ return [
         ],
     ],
 
+    'omocodia' => [
+        'heading' => 'Omocodia',
+        'tagline' => 'Quando due persone genererebbero lo stesso codice, l\'Agenzia delle Entrate risolve la collisione sostituendo alcune di 7 posizioni numeriche fisse con lettere. Attivane una qualsiasi per vedere una variante reale ed equivalente.',
+        'code_label' => 'Codice fiscale',
+        'load' => 'Carica',
+        'invalid_format' => 'Non è un codice fiscale ben formato (lunghezza o caratteri errati).',
+        'canonical_form' => 'Forma canonica',
+        'level' => 'Livello di sostituzione',
+        'variant' => 'Codice variante',
+        'equivalent' => 'Equivalente alla forma canonica',
+        'yes' => 'Sì',
+        'no' => 'No',
+        'positions' => [
+            'year_1' => 'Anno (1° cifra)',
+            'year_2' => 'Anno (2° cifra)',
+            'day_1' => 'Giorno (1° cifra)',
+            'day_2' => 'Giorno (2° cifra)',
+            'birthplace_1' => 'Codice catastale (1° cifra)',
+            'birthplace_2' => 'Codice catastale (2° cifra)',
+            'birthplace_3' => 'Codice catastale (3° cifra)',
+        ],
+    ],
+
     'breakdown' => [
         'surname' => 'Codice cognome — le prime tre consonanti del cognome.',
         'name' => 'Codice nome — tre lettere prese dal nome.',

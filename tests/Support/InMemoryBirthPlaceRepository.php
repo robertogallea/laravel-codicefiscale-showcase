@@ -36,7 +36,10 @@ final class InMemoryBirthPlaceRepository implements BirthPlaceRepository
             new ForeignBirthPlace(BirthPlaceCode::from('Z404'), 'Stati Uniti d\'America', CountryCode::from('USA'), $epoch),
             // Exists, but only from 1990 onward - a code that's valid
             // today yet not on an earlier birth date, distinguishing
-            // "never existed" (A999, not in this list at all) from
+            // "never existed" (X999 - genuinely unassigned in the real
+            // ANPR/MAECI data too, verified directly against it; A999
+            // looks unassigned only by accident of this fixture's small
+            // size - it's real data, Borghetto Santo Spirito) from
             // "existed, wrong date".
             new ForeignBirthPlace(BirthPlaceCode::from('Z999'), 'Nuova Nazione', CountryCode::from('ZZZ'), new \DateTimeImmutable('1990-01-01')),
             // The mirror image of Z999: valid only long ago, ceased to
@@ -46,6 +49,20 @@ final class InMemoryBirthPlaceRepository implements BirthPlaceRepository
             // plausible candidates when a birthplace is valid at exactly
             // that older date and not the younger one.
             new DomesticBirthPlace(BirthPlaceCode::from('Y001'), 'Comune Storico', 'ZZ', '999999', $epoch, new \DateTimeImmutable('1950-01-01')),
+            // G698: a real comune (verified directly against the real
+            // ANPR data at storage/app/codicefiscale/places.sqlite,
+            // fetched by codice-fiscale:update-places) with two genuine
+            // identity changes sharing one code - renamed Piperno to
+            // Priverno on 1928-09-09, then reprovinced RM to LT on
+            // 1934-10-26. Real dates, names, provinces, and istat
+            // codes for all three eras (collapsing only the several
+            // same-name-same-province micro-boundary date churns the
+            // real data also has, which aren't identity changes),
+            // mirrored here so the Birthplace-history Explore page's
+            // tests don't depend on network access or the real data.
+            new DomesticBirthPlace(BirthPlaceCode::from('G698'), 'Piperno', 'RM', '058929', new \DateTimeImmutable('1871-01-15'), new \DateTimeImmutable('1928-09-09')),
+            new DomesticBirthPlace(BirthPlaceCode::from('G698'), 'Priverno', 'RM', '058929', new \DateTimeImmutable('1928-09-09'), new \DateTimeImmutable('1934-10-26')),
+            new DomesticBirthPlace(BirthPlaceCode::from('G698'), 'Priverno', 'LT', '059019', new \DateTimeImmutable('1934-10-26')),
         ];
     }
 

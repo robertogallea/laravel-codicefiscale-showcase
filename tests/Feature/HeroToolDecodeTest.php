@@ -60,8 +60,11 @@ it('shows a specific message for a nonexistent calendar date', function () {
 });
 
 it('shows a specific message for an unrecognized birthplace', function () {
-    // A999 never appears in the fixture repository at all.
-    $code = codeFromFirst15('RSSMRA95E05A999');
+    // X999 never appears in the fixture repository - or in the real
+    // ANPR/MAECI data either, verified directly against it (unlike
+    // A999, which looks unassigned only by coincidence of this
+    // fixture's small size: it's real data, Borghetto Santo Spirito).
+    $code = codeFromFirst15('RSSMRA95E05X999');
 
     Livewire::test(HeroTool::class)
         ->set('mode', 'decode')

@@ -121,6 +121,18 @@ return [
         'tiebreak_note' => 'When both candidates are otherwise equally plausible, the resolver also checks birthplace history: a birthplace valid at exactly one of the two candidate dates settles the tie. Try switching the birthplace to see this in action.',
     ],
 
+    'birthplace_history' => [
+        'heading' => 'Birthplace history',
+        'tagline' => 'A comune that renamed itself or changed province keeps its cadastral code across the change — the birthplace domain models this as multiple time-bounded records sharing one code, resolved by date. The worked example, Piperno, had both: renamed Priverno on 9 September 1928, then reprovinced from Roma to Latina on 26 October 1934.',
+        'date_label' => 'Birth date',
+        'comune_section' => 'Historical resolution — G698 (Piperno → Priverno)',
+        'never_existed_section' => 'Never existed vs. existed, wrong date — X999',
+        'name_label' => 'Name',
+        'province_label' => 'Province',
+        'not_valid_on_date' => 'Existed, but not valid on this date.',
+        'never_existed' => 'Never existed.',
+    ],
+
     'breakdown' => [
         'surname' => 'Surname code — the first three consonants of the surname.',
         'name' => 'Name code — three letters taken from the first name.',

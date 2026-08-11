@@ -117,6 +117,18 @@ return [
         'tiebreak_note' => 'Quando entrambi i candidati sono altrimenti ugualmente plausibili, il resolver controlla anche la storia del luogo di nascita: un luogo valido esattamente a una delle due date candidate risolve la parità. Prova a cambiare il luogo di nascita per vederlo in azione.',
     ],
 
+    'birthplace_history' => [
+        'heading' => 'Storia dei luoghi di nascita',
+        'tagline' => 'Un comune che ha cambiato nome o provincia mantiene il proprio codice catastale attraverso il cambiamento — il dominio dei luoghi di nascita lo modella come più record delimitati nel tempo che condividono un codice, risolti in base alla data. L\'esempio scelto, Piperno, ha avuto entrambi: rinominato Priverno il 9 settembre 1928, poi passato dalla provincia di Roma a quella di Latina il 26 ottobre 1934.',
+        'date_label' => 'Data di nascita',
+        'comune_section' => 'Risoluzione storica — G698 (Piperno → Priverno)',
+        'never_existed_section' => 'Mai esistito o esistito ma non a questa data — X999',
+        'name_label' => 'Nome',
+        'province_label' => 'Provincia',
+        'not_valid_on_date' => 'Esisteva, ma non era valido a questa data.',
+        'never_existed' => 'Mai esistito.',
+    ],
+
     'breakdown' => [
         'surname' => 'Codice cognome — le prime tre consonanti del cognome.',
         'name' => 'Codice nome — tre lettere prese dal nome.',

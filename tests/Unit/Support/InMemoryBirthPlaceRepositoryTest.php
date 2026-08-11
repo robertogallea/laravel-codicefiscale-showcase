@@ -24,12 +24,12 @@ it('finds a known foreign birthplace by code', function () {
 });
 
 it('returns null for a code that never existed', function () {
-    expect($this->repository->find(BirthPlaceCode::from('A999')))->toBeNull();
+    expect($this->repository->find(BirthPlaceCode::from('X999')))->toBeNull();
 });
 
 it('distinguishes never-existed from valid-wrong-date via existedEver', function () {
     expect($this->repository->existedEver(BirthPlaceCode::from('F205')))->toBeTrue()
-        ->and($this->repository->existedEver(BirthPlaceCode::from('A999')))->toBeFalse();
+        ->and($this->repository->existedEver(BirthPlaceCode::from('X999')))->toBeFalse();
 });
 
 it('searches by case/accent-insensitive substring match', function () {
@@ -64,4 +64,19 @@ it('finds a place valid only long ago, ceased to exist before today', function (
     expect($this->repository->find($code, new DateTimeImmutable('1900-01-01')))->not->toBeNull()
         ->and($this->repository->find($code))->toBeNull()
         ->and($this->repository->existedEver($code))->toBeTrue();
+});
+
+it('resolves a comune with two real identity changes to the era matching the given date', function () {
+    $code = BirthPlaceCode::from('G698');
+
+    $beforeRename = $this->repository->find($code, new DateTimeImmutable('1900-01-01'));
+    $afterRenameBeforeReprovince = $this->repository->find($code, new DateTimeImmutable('1930-01-01'));
+    $afterReprovince = $this->repository->find($code, new DateTimeImmutable('2000-01-01'));
+
+    expect($beforeRename->name())->toBe('Piperno')
+        ->and($beforeRename->province())->toBe('RM')
+        ->and($afterRenameBeforeReprovince->name())->toBe('Priverno')
+        ->and($afterRenameBeforeReprovince->province())->toBe('RM')
+        ->and($afterReprovince->name())->toBe('Priverno')
+        ->and($afterReprovince->province())->toBe('LT');
 });

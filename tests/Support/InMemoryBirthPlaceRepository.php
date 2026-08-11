@@ -22,9 +22,16 @@ final class InMemoryBirthPlaceRepository implements BirthPlaceRepository
     public function __construct()
     {
         $epoch = new \DateTimeImmutable('1861-01-01');
+        $reprovincedOn = new \DateTimeImmutable('1900-01-01');
 
         $this->places = [
-            new DomesticBirthPlace(BirthPlaceCode::from('F205'), 'Milano', 'MI', '015146', $epoch),
+            // Two era-records sharing one code, same name, different
+            // province - a synthetic stand-in for the real trap
+            // described in .ai/rules/support.md (a comune that changed
+            // province keeps its BirthPlaceCode across both eras).
+            // Not a real historical claim about Milano.
+            new DomesticBirthPlace(BirthPlaceCode::from('F205'), 'Milano', 'XX', '015146', $epoch, $reprovincedOn),
+            new DomesticBirthPlace(BirthPlaceCode::from('F205'), 'Milano', 'MI', '015146', $reprovincedOn),
             new DomesticBirthPlace(BirthPlaceCode::from('H501'), 'Roma', 'RM', '058091', $epoch),
             new ForeignBirthPlace(BirthPlaceCode::from('Z404'), 'Stati Uniti d\'America', CountryCode::from('USA'), $epoch),
         ];
@@ -63,6 +70,8 @@ final class InMemoryBirthPlaceRepository implements BirthPlaceRepository
             fn (BirthPlace $place) => str_contains($this->normalize($place->name()), $needle)
                 && ($on === null || $place->wasValidOn($on)),
         ));
+
+        usort($results, fn (BirthPlace $a, BirthPlace $b) => $b->validFrom() <=> $a->validFrom());
 
         return $limit === null ? $results : array_slice($results, 0, $limit);
     }

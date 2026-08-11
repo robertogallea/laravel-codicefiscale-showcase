@@ -42,3 +42,18 @@ it('searches by case/accent-insensitive substring match', function () {
 it('returns an empty list when nothing matches a search', function () {
     expect($this->repository->search('Nowhereville'))->toBe([]);
 });
+
+it('returns every era-record sharing a code when unfiltered by date, most-recent-first', function () {
+    $results = $this->repository->search('milano');
+
+    expect($results)->toHaveCount(2)
+        ->and($results[0]->province())->toBe('MI')
+        ->and($results[1]->province())->toBe('XX');
+});
+
+it('filters era-records by date, returning only the one valid then', function () {
+    $results = $this->repository->search('milano', new DateTimeImmutable('1870-01-01'));
+
+    expect($results)->toHaveCount(1)
+        ->and($results[0]->province())->toBe('XX');
+});

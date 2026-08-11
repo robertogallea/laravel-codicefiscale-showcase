@@ -142,6 +142,16 @@ return [
         'valid_message' => 'Valid — :code passed validation.',
     ],
 
+    'people' => [
+        'heading' => 'People directory',
+        'tagline' => 'A real Eloquent model, App\Models\Person, storing each row\'s codice_fiscale through CodiceFiscaleCast. The seeded rows are a deliberate mix: most were produced with the Faker provider for bulk random data, and a few were built by generating a code directly from a specific Person value object, so re-parsing those rows\' own codice_fiscale reproduces the exact data they were generated from.',
+        'columns' => [
+            'name' => 'Name',
+            'codice_fiscale' => 'Codice fiscale',
+        ],
+        'empty' => 'No people yet — run the database seeder.',
+    ],
+
     'breakdown' => [
         'surname' => 'Surname code — the first three consonants of the surname.',
         'name' => 'Name code — three letters taken from the first name.',

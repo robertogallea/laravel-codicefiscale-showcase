@@ -138,6 +138,16 @@ return [
         'valid_message' => 'Valido — :code ha superato la validazione.',
     ],
 
+    'people' => [
+        'heading' => 'Rubrica delle persone',
+        'tagline' => 'Un vero modello Eloquent, App\Models\Person, che memorizza il codice fiscale di ogni riga tramite CodiceFiscaleCast. Le righe seminate sono un mix deliberato: la maggior parte è stata prodotta con il provider Faker per dati casuali in blocco, e alcune sono state costruite generando un codice direttamente da un preciso value object Person, così ridecodificare il codice fiscale di quelle righe ne riproduce esattamente i dati di partenza.',
+        'columns' => [
+            'name' => 'Nome',
+            'codice_fiscale' => 'Codice fiscale',
+        ],
+        'empty' => 'Ancora nessuna persona — esegui il seeder del database.',
+    ],
+
     'breakdown' => [
         'surname' => 'Codice cognome — le prime tre consonanti del cognome.',
         'name' => 'Codice nome — tre lettere prese dal nome.',

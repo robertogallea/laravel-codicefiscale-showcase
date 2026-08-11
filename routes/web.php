@@ -7,6 +7,7 @@ use App\Http\Controllers\Explore\RepositorySwapController;
 use App\Http\Controllers\Explore\ValidationRuleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\People\PeopleIndexController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -21,3 +22,5 @@ Route::get('/explore/birth-date-resolver', BirthDateResolverController::class)->
 Route::get('/explore/birthplace-history', BirthplaceHistoryController::class)->name('explore.birthplace-history');
 Route::get('/explore/validation-rule', [ValidationRuleController::class, 'show'])->name('explore.validation-rule');
 Route::post('/explore/validation-rule', [ValidationRuleController::class, 'store'])->name('explore.validation-rule.store');
+
+Route::get('/people', PeopleIndexController::class)->name('people.index');

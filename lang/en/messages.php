@@ -18,8 +18,11 @@ return [
     ],
 
     'hero' => [
-        'calculate' => [
-            'tab' => 'Calculate',
+        // Shared by every hero-tool form that collects a person's own
+        // data (Calculate, and the Decode person-matching disclosure) -
+        // kept out of 'calculate' so it's clearly shared copy, not one
+        // feature's private strings that another feature quietly reuses.
+        'fields' => [
             'first_name' => 'First name',
             'last_name' => 'Last name',
             'birth_date' => 'Birth date',
@@ -29,6 +32,9 @@ return [
             'birth_place' => 'Birth place',
             'birth_place_placeholder' => 'Search a comune or country…',
             'birth_place_unresolved' => 'Select a birthplace from the suggestions.',
+        ],
+        'calculate' => [
+            'tab' => 'Calculate',
             'submit' => 'Generate',
             'verify' => 'Verify this code',
         ],
@@ -58,6 +64,14 @@ return [
             'omocodia' => 'Omocodia variant',
             'yes' => 'Yes',
             'no' => 'No',
+        ],
+        'match' => [
+            'toggle' => 'Also check against a person',
+            'submit' => 'Check',
+            'gender_unspecified' => 'Unspecified',
+            'matched' => 'Matched',
+            'mismatched' => 'Mismatched',
+            'skipped' => 'Skipped',
         ],
     ],
 

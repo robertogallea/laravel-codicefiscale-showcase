@@ -9,35 +9,35 @@
             <form wire:submit="generate" class="mt-6 grid max-w-lg gap-4">
                 <flux:input
                     wire:model="firstName"
-                    label="{{ __('messages.hero.calculate.first_name') }}"
+                    label="{{ __('messages.hero.fields.first_name') }}"
                 />
 
                 <flux:input
                     wire:model="lastName"
-                    label="{{ __('messages.hero.calculate.last_name') }}"
+                    label="{{ __('messages.hero.fields.last_name') }}"
                 />
 
                 <flux:input
                     type="date"
                     wire:model="birthDate"
-                    label="{{ __('messages.hero.calculate.birth_date') }}"
+                    label="{{ __('messages.hero.fields.birth_date') }}"
                 />
 
-                <flux:radio.group wire:model="gender" label="{{ __('messages.hero.calculate.gender') }}" variant="segmented">
-                    <flux:radio value="M" label="{{ __('messages.hero.calculate.gender_male') }}" />
-                    <flux:radio value="F" label="{{ __('messages.hero.calculate.gender_female') }}" />
+                <flux:radio.group wire:model="gender" label="{{ __('messages.hero.fields.gender') }}" variant="segmented">
+                    <flux:radio value="M" label="{{ __('messages.hero.fields.gender_male') }}" />
+                    <flux:radio value="F" label="{{ __('messages.hero.fields.gender_female') }}" />
                 </flux:radio.group>
 
                 <flux:select
                     wire:model="birthPlaceCode"
                     variant="combobox"
                     :filter="false"
-                    label="{{ __('messages.hero.calculate.birth_place') }}"
+                    label="{{ __('messages.hero.fields.birth_place') }}"
                 >
                     <x-slot name="input">
                         <flux:select.input
                             wire:model.live="birthPlaceQuery"
-                            placeholder="{{ __('messages.hero.calculate.birth_place_placeholder') }}"
+                            placeholder="{{ __('messages.hero.fields.birth_place_placeholder') }}"
                         />
                     </x-slot>
 
@@ -103,6 +103,82 @@
                             <dd>{{ $decodedDetails['is_omocodia'] ? __('messages.decode.result.yes') : __('messages.decode.result.no') }}</dd>
                         </div>
                     </dl>
+
+                    <flux:switch wire:model.live="checkAgainstPerson" label="{{ __('messages.decode.match.toggle') }}" />
+
+                    @if ($checkAgainstPerson)
+                        <form wire:submit="checkMatch" class="grid max-w-lg gap-4">
+                            <flux:input
+                                wire:model="matchFirstName"
+                                label="{{ __('messages.hero.fields.first_name') }}"
+                            />
+
+                            <flux:input
+                                wire:model="matchLastName"
+                                label="{{ __('messages.hero.fields.last_name') }}"
+                            />
+
+                            <flux:input
+                                type="date"
+                                wire:model="matchBirthDate"
+                                label="{{ __('messages.hero.fields.birth_date') }}"
+                            />
+
+                            <flux:radio.group wire:model="matchGender" label="{{ __('messages.hero.fields.gender') }}" variant="segmented">
+                                <flux:radio value="" label="{{ __('messages.decode.match.gender_unspecified') }}" />
+                                <flux:radio value="M" label="{{ __('messages.hero.fields.gender_male') }}" />
+                                <flux:radio value="F" label="{{ __('messages.hero.fields.gender_female') }}" />
+                            </flux:radio.group>
+
+                            <flux:select
+                                wire:model="matchBirthPlaceCode"
+                                variant="combobox"
+                                :filter="false"
+                                label="{{ __('messages.hero.fields.birth_place') }}"
+                            >
+                                <x-slot name="input">
+                                    <flux:select.input
+                                        wire:model.live="matchBirthPlaceQuery"
+                                        placeholder="{{ __('messages.hero.fields.birth_place_placeholder') }}"
+                                    />
+                                </x-slot>
+
+                                @foreach ($this->matchBirthPlaceOptions as $option)
+                                    <flux:select.option value="{{ $option['code'] }}" wire:key="match-birth-place-{{ $option['code'] }}">
+                                        {{ $option['label'] }}
+                                    </flux:select.option>
+                                @endforeach
+                            </flux:select>
+
+                            <div>
+                                <flux:button type="submit" variant="primary">
+                                    {{ __('messages.decode.match.submit') }}
+                                </flux:button>
+                            </div>
+                        </form>
+
+                        @if ($matchStatuses)
+                            <dl class="max-w-lg divide-y divide-zinc-200 text-sm dark:divide-zinc-700">
+                                @foreach (['first_name', 'last_name', 'birth_date', 'birth_place', 'gender'] as $field)
+                                    <div class="flex justify-between gap-4 py-2">
+                                        <dt class="text-zinc-500 dark:text-zinc-400">{{ __('messages.hero.fields.'.$field) }}</dt>
+                                        <dd>
+                                            @switch($matchStatuses[$field])
+                                                @case('matched')
+                                                    <flux:badge color="green" icon="check">{{ __('messages.decode.match.matched') }}</flux:badge>
+                                                    @break
+                                                @case('mismatched')
+                                                    <flux:badge color="red" icon="x-mark">{{ __('messages.decode.match.mismatched') }}</flux:badge>
+                                                    @break
+                                                @default
+                                                    <flux:badge color="zinc" icon="minus">{{ __('messages.decode.match.skipped') }}</flux:badge>
+                                            @endswitch
+                                        </dd>
+                                    </div>
+                                @endforeach
+                            </dl>
+                        @endif
+                    @endif
                 </div>
             @elseif ($decodeValid === false)
                 <flux:callout variant="danger" class="mt-6 max-w-lg" icon="exclamation-triangle">

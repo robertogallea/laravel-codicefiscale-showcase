@@ -18,8 +18,7 @@ return [
     ],
 
     'hero' => [
-        'calculate' => [
-            'tab' => 'Calcola',
+        'fields' => [
             'first_name' => 'Nome',
             'last_name' => 'Cognome',
             'birth_date' => 'Data di nascita',
@@ -29,6 +28,9 @@ return [
             'birth_place' => 'Luogo di nascita',
             'birth_place_placeholder' => 'Cerca un comune o uno stato estero…',
             'birth_place_unresolved' => 'Seleziona un luogo di nascita dai suggerimenti.',
+        ],
+        'calculate' => [
+            'tab' => 'Calcola',
             'submit' => 'Genera',
             'verify' => 'Verifica questo codice',
         ],
@@ -58,6 +60,14 @@ return [
             'omocodia' => 'Variante omocodica',
             'yes' => 'Sì',
             'no' => 'No',
+        ],
+        'match' => [
+            'toggle' => 'Verifica anche con una persona',
+            'submit' => 'Verifica',
+            'gender_unspecified' => 'Non specificato',
+            'matched' => 'Corrispondente',
+            'mismatched' => 'Non corrispondente',
+            'skipped' => 'Non verificato',
         ],
     ],
 

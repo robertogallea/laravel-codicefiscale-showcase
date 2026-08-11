@@ -2,24 +2,7 @@
 
 use App\Livewire\HeroTool;
 use Livewire\Livewire;
-use Robertogallea\CodiceFiscale\Data\BirthPlaceCode;
-use Robertogallea\CodiceFiscale\Data\Person;
-use Robertogallea\CodiceFiscale\Enums\Gender;
 use Robertogallea\CodiceFiscale\Generation\Checksum;
-use Robertogallea\CodiceFiscale\Generation\Generator;
-
-function validCodeForMilano(): string
-{
-    $person = new Person(
-        firstName: 'Mario',
-        lastName: 'Rossi',
-        birthDate: new DateTimeImmutable('1995-05-05'),
-        birthPlace: BirthPlaceCode::from('F205'),
-        gender: Gender::Male,
-    );
-
-    return (new Generator)->generate($person)->value();
-}
 
 function codeFromFirst15(string $first15): string
 {

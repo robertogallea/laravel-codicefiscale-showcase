@@ -129,6 +129,15 @@ return [
         'never_existed' => 'Mai esistito.',
     ],
 
+    'validation_rule' => [
+        'heading' => 'La regola di validazione elementare',
+        'tagline' => 'Ogni altra pagina di questo sito chiama direttamente il Validator del dominio e ottiene una lista tipizzata di casi ValidationError su cui costruire la propria interfaccia. Questa pagina è l\'opposto: un vero form Laravel, validato lato server con nient\'altro che la regola codice_fiscale passata a $request->validate() — nessun oggetto del dominio tocca mai il codice di questa pagina. La regola è costruita sullo stesso identico Validator, quindi il testo del messaggio è altrettanto specifico, ma l\'app non vede mai un ValidationError su cui agire: riceve solo l\'ordinario error bag di Laravel. Vedi Decodifica per la versione più ricca e programmabile.',
+        'field_label' => 'Codice fiscale',
+        'field_placeholder' => 'es. RSSMRA95E05F205Z',
+        'submit' => 'Valida',
+        'valid_message' => 'Valido — :code ha superato la validazione.',
+    ],
+
     'breakdown' => [
         'surname' => 'Codice cognome — le prime tre consonanti del cognome.',
         'name' => 'Codice nome — tre lettere prese dal nome.',

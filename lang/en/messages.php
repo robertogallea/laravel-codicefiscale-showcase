@@ -133,6 +133,15 @@ return [
         'never_existed' => 'Never existed.',
     ],
 
+    'validation_rule' => [
+        'heading' => 'The plain validation rule',
+        'tagline' => 'Every other page on this site calls the domain Validator directly and gets back a typed list of ValidationError cases to build its own UI around. This page is the opposite: a real Laravel form, validated server-side with nothing but the bare codice_fiscale rule string plugged into $request->validate() — no domain object ever touches this page\'s code. The rule is built on the very same Validator, so the message text is just as specific, but the app never sees a ValidationError to act on: it only gets Laravel\'s ordinary $errors bag. See Decode for the richer, programmatic version.',
+        'field_label' => 'Codice fiscale',
+        'field_placeholder' => 'e.g. RSSMRA95E05F205Z',
+        'submit' => 'Validate',
+        'valid_message' => 'Valid — :code passed validation.',
+    ],
+
     'breakdown' => [
         'surname' => 'Surname code — the first three consonants of the surname.',
         'name' => 'Name code — three letters taken from the first name.',

@@ -6,7 +6,9 @@
 
     <div class="mt-6 max-w-lg space-y-4">
         @if (session('validatedCode'))
-            <flux:callout variant="success" icon="check-circle" :text="__('messages.validation_rule.valid_message', ['code' => session('validatedCode')])" />
+            <flux:callout variant="success" icon="check-circle">
+                <flux:callout.text>{{ __('messages.validation_rule.valid_message', ['code' => session('validatedCode')]) }}</flux:callout.text>
+            </flux:callout>
         @endif
 
         <form method="POST" action="{{ route('explore.validation-rule.store') }}">

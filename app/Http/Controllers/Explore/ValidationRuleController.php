@@ -15,11 +15,17 @@ use Illuminate\Http\Request;
  */
 class ValidationRuleController extends Controller
 {
+    /**
+     * Show the form.
+     */
     public function show(): View
     {
         return view('explore.validation-rule');
     }
 
+    /**
+     * Validate the submitted codice fiscale.
+     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

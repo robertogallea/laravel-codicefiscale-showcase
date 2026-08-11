@@ -7,7 +7,9 @@ use App\Http\Controllers\Explore\RepositorySwapController;
 use App\Http\Controllers\Explore\ValidationRuleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\People\PeopleCreateController;
 use App\Http\Controllers\People\PeopleIndexController;
+use App\Http\Controllers\People\PeopleShowController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -24,3 +26,5 @@ Route::get('/explore/validation-rule', [ValidationRuleController::class, 'show']
 Route::post('/explore/validation-rule', [ValidationRuleController::class, 'store'])->name('explore.validation-rule.store');
 
 Route::get('/people', PeopleIndexController::class)->name('people.index');
+Route::get('/people/create', PeopleCreateController::class)->name('people.create');
+Route::get('/people/{person}', PeopleShowController::class)->name('people.show');

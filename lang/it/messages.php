@@ -146,6 +146,29 @@ return [
             'codice_fiscale' => 'Codice fiscale',
         ],
         'empty' => 'Ancora nessuna persona — esegui il seeder del database.',
+        'new' => 'Nuova persona',
+        'back_to_list' => 'Torna all\'elenco',
+        'fields' => [
+            'first_name' => 'Nome',
+            'last_name' => 'Cognome',
+            'birth_date' => 'Data di nascita',
+            'gender' => 'Sesso',
+            'gender_male' => 'Maschio',
+            'gender_female' => 'Femmina',
+            'birth_place' => 'Luogo di nascita',
+            'birth_place_placeholder' => 'Cerca un comune o uno stato estero…',
+            'codice_fiscale' => 'Codice fiscale',
+            'codice_fiscale_placeholder' => 'es. RSSMRA95E05F205Z',
+        ],
+        'create' => [
+            'heading' => 'Aggiungi una persona',
+            'tagline' => 'Validato da CodiceFiscaleRule::make()->matching() - la forma fluente e cross-field della regola codice_fiscale. A differenza della regola elementare nella pagina Explore sulla validazione, questa controlla il codice inserito rispetto a ciascun campo personale qui sotto, e fallisce indicando lo specifico campo che non corrisponde, non un errore generico.',
+            'submit' => 'Crea',
+        ],
+        'show' => [
+            'reparse_heading' => 'Ridecodifica dal vivo',
+            'reparse_tagline' => 'Lo schema qui sotto e i campi che seguono sono decodificati direttamente dal codice fiscale memorizzato per questa persona, indipendentemente dalle colonne nome/cognome - lo stesso Parser usato dalla modalità Decodifica dello strumento principale, che concorda con ciò che CodiceFiscaleCast ha già ricavato dalla colonna.',
+        ],
     ],
 
     'breakdown' => [

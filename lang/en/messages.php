@@ -150,6 +150,29 @@ return [
             'codice_fiscale' => 'Codice fiscale',
         ],
         'empty' => 'No people yet — run the database seeder.',
+        'new' => 'New person',
+        'back_to_list' => 'Back to the list',
+        'fields' => [
+            'first_name' => 'First name',
+            'last_name' => 'Last name',
+            'birth_date' => 'Birth date',
+            'gender' => 'Gender',
+            'gender_male' => 'Male',
+            'gender_female' => 'Female',
+            'birth_place' => 'Birth place',
+            'birth_place_placeholder' => 'Search a comune or country…',
+            'codice_fiscale' => 'Codice fiscale',
+            'codice_fiscale_placeholder' => 'e.g. RSSMRA95E05F205Z',
+        ],
+        'create' => [
+            'heading' => 'Add a person',
+            'tagline' => 'Validated by CodiceFiscaleRule::make()->matching() - the fluent, cross-field-aware form of the codice_fiscale rule. Unlike the plain rule on the validation-rule Explore page, this checks the submitted code against every personal field below, and fails on the specific field that doesn\'t match rather than a generic error.',
+            'submit' => 'Create',
+        ],
+        'show' => [
+            'reparse_heading' => 'Live re-parse',
+            'reparse_tagline' => 'The breakdown below and the fields under it are decoded straight from this person\'s own stored codice_fiscale, independently of the first name/last name columns - the same Parser used by the hero tool\'s Decode mode, agreeing with what CodiceFiscaleCast already turned the column into.',
+        ],
     ],
 
     'breakdown' => [

@@ -1,3 +1,7 @@
+---
+status: superseded by ADR-0004
+---
+
 # Depend on laravel-codicefiscale via a local path repository on its `dev` branch
 
 laravel-codicefiscale v3 is a ground-up rewrite with no tagged Packagist release yet; the only place it exists is a working checkout at `/home/roberto/code/packages/laravel-codicefiscale`. We require it via a composer path repository pinned to the `dev` branch (`dev-dev`), the same mechanism a sibling prototype app already used, rather than waiting for a release.

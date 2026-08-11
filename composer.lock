@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f039d0d32680d64706da9e366ca4937c",
+    "content-hash": "4f38b96acda06d3d1e2b7635e5ba7759",
     "packages": [
         {
             "name": "brick/math",
@@ -3524,10 +3524,16 @@
         {
             "name": "robertogallea/laravel-codicefiscale",
             "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robertogallea/laravel-codicefiscale.git",
+                "reference": "347e22c870bad17c3325d45d7f6091aa3417b871"
+            },
             "dist": {
-                "type": "path",
-                "url": "/home/roberto/code/packages/laravel-codicefiscale-dev",
-                "reference": "cbb3b2c32d0ba19060b679ebfa720fccdbb8b29e"
+                "type": "zip",
+                "url": "https://api.github.com/repos/robertogallea/laravel-codicefiscale/zipball/347e22c870bad17c3325d45d7f6091aa3417b871",
+                "reference": "347e22c870bad17c3325d45d7f6091aa3417b871",
+                "shasum": ""
             },
             "require": {
                 "illuminate/database": "^12.0|^13.0",
@@ -3559,19 +3565,7 @@
                     "Robertogallea\\CodiceFiscale\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "pest"
-                ],
-                "phpstan": [
-                    "phpstan analyse"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Roberto Gallea",
@@ -3579,10 +3573,17 @@
                 }
             ],
             "description": "Codice fiscale validation for php/laravel",
-            "transport-options": {
-                "symlink": true,
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/robertogallea/laravel-codicefiscale/issues",
+                "source": "https://github.com/robertogallea/laravel-codicefiscale/tree/dev"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/robertogallea",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-08-11T11:24:43+00:00"
         },
         {
             "name": "symfony/clock",

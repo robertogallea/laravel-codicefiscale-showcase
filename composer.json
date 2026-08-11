@@ -84,13 +84,6 @@
             "name": "flux-pro",
             "type": "composer",
             "url": "https://composer.fluxui.dev"
-        },
-        {
-            "type": "path",
-            "url": "/home/roberto/code/packages/laravel-codicefiscale-dev",
-            "options": {
-                "symlink": true
-            }
         }
     ],
     "config": {

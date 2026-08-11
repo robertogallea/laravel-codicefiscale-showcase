@@ -22,6 +22,11 @@ pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
     ->in('Feature');
 
+// No RefreshDatabase: the Browser suite's one test never touches Eloquent,
+// only the fixture BirthPlaceRepository binding TestCase already provides.
+pest()->extend(TestCase::class)
+    ->in('Browser');
+
 /*
 |--------------------------------------------------------------------------
 | Shared fixture data

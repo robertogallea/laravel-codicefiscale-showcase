@@ -1,0 +1,5 @@
+# Fetch real government birthplace data at setup time
+
+The package's semantic validation and birthplace lookups return "unknown" until `codice-fiscale:update-places` has run at least once. We considered shipping a small curated fixture set instead (as the package's own Faker provider does, by design — see its own ADR 0007). We chose to run `codice-fiscale:update-places` as part of this app's setup, giving full real ANPR/MAECI coverage for birthplace search everywhere except the test suite, which keeps using an in-memory fixture repository. A showcase advertising full feature coverage needs its birthplace search to actually cover Italy, not a handful of curated cities, and the cost is a one-time network fetch into the package's own dedicated SQLite database — it never touches this app's own database.
+
+**Consequences**: setup requires outbound network access to `anagrafenazionale.interno.it`. Environments without it (CI, offline dev) need either the fixture path or a pre-populated database provided some other way.

@@ -4,6 +4,45 @@ return [
 
     'home' => [
         'tagline' => 'Una vetrina di tutte le funzionalità di laravel-codicefiscale v3.',
+        'features_heading' => 'Esplora tutte le funzionalità',
+        'features' => [
+            'calculate' => [
+                'heading' => 'Calcola',
+                'description' => 'Genera un codice fiscale a partire da nome, data di nascita, sesso e luogo di nascita.',
+            ],
+            'decode' => [
+                'heading' => 'Decodifica',
+                'description' => 'Decodifica un codice esistente in sesso, data di nascita e luogo di nascita, con un motivo specifico per ogni errore.',
+            ],
+            'person_matching' => [
+                'heading' => 'Verifica con una persona',
+                'description' => 'Verifica un codice decodificato rispetto a nome, data di nascita, luogo di nascita e sesso di una persona, campo per campo.',
+            ],
+            'omocodia' => [
+                'heading' => 'Playground omocodia',
+                'description' => 'Attiva una qualsiasi delle 7 posizioni numeriche sostituibili e osserva la variante risultante rimanere equivalente al codice canonico.',
+            ],
+            'repository_swap' => [
+                'heading' => 'Demo scambio repository',
+                'description' => 'Risolvi lo stesso codice fisso attraverso due diversi binding di BirthPlaceRepository - quello reale e uno immaginario.',
+            ],
+            'birth_date_resolver' => [
+                'heading' => 'Playground risoluzione anno di nascita',
+                'description' => 'Modifica l\'età massima plausibile e osserva il resolver scegliere tra i due candidati di un anno a due cifre ambiguo.',
+            ],
+            'birthplace_history' => [
+                'heading' => 'Storia dei luoghi di nascita',
+                'description' => 'Osserva l\'identità rinominata/riprovincializzata di un comune risolversi correttamente in base alla data, e "mai esistito" distinto da "data errata."',
+            ],
+            'validation_rule' => [
+                'heading' => 'La regola di validazione elementare',
+                'description' => 'La regola Laravel codice_fiscale elementare in una vera chiamata $request->validate() - l\'integrazione più semplice possibile.',
+            ],
+            'people' => [
+                'heading' => 'Rubrica delle persone',
+                'description' => 'Un vero modello Eloquent con una colonna codice_fiscale gestita da CodiceFiscaleCast, seminata, elencata e creabile.',
+            ],
+        ],
     ],
 
     'footer' => [

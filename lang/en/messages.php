@@ -4,6 +4,45 @@ return [
 
     'home' => [
         'tagline' => 'A showcase of every laravel-codicefiscale v3 feature.',
+        'features_heading' => 'Explore every feature',
+        'features' => [
+            'calculate' => [
+                'heading' => 'Calculate',
+                'description' => 'Generate a codice fiscale from a name, birth date, gender, and birthplace.',
+            ],
+            'decode' => [
+                'heading' => 'Decode',
+                'description' => 'Decode an existing code into gender, birth date, and birthplace, with a specific reason for any failure.',
+            ],
+            'person_matching' => [
+                'heading' => 'Person matching',
+                'description' => 'Check a decoded code against a person\'s own name, birth date, birthplace, and gender, field by field.',
+            ],
+            'omocodia' => [
+                'heading' => 'Omocodia playground',
+                'description' => 'Toggle any of the 7 substitutable digit positions and watch the resulting variant stay equivalent to the canonical code.',
+            ],
+            'repository_swap' => [
+                'heading' => 'Repository-swap demo',
+                'description' => 'Resolve the same fixed code under two different BirthPlaceRepository bindings - the real one and a fictional one.',
+            ],
+            'birth_date_resolver' => [
+                'heading' => 'Birth-year resolution playground',
+                'description' => 'Adjust the maximum plausible age and watch the resolver pick between an ambiguous two-digit year\'s two candidates.',
+            ],
+            'birthplace_history' => [
+                'heading' => 'Birthplace history',
+                'description' => 'See a comune\'s renamed/reprovinced identity resolve correctly by date, and "never existed" distinguished from "wrong date."',
+            ],
+            'validation_rule' => [
+                'heading' => 'The plain validation rule',
+                'description' => 'The bare codice_fiscale Laravel rule in a real $request->validate() call - the simplest possible integration.',
+            ],
+            'people' => [
+                'heading' => 'People directory',
+                'description' => 'A real Eloquent model with a codice_fiscale column cast via CodiceFiscaleCast, seeded, listed, and creatable.',
+            ],
+        ],
     ],
 
     'footer' => [

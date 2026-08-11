@@ -23,6 +23,13 @@ use Robertogallea\CodiceFiscale\Validation\Validator;
 
 class HeroTool extends Component
 {
+    /**
+     * URL-reflected so the homepage's feature card grid can deep-link
+     * straight into Decode (and, combined with checkAgainstPerson
+     * below, the person-matching disclosure) rather than only ever
+     * landing on the default Calculate tab.
+     */
+    #[Url(as: 'mode')]
     public string $mode = 'calculate';
 
     public string $firstName = '';
@@ -51,6 +58,7 @@ class HeroTool extends Component
     /** @var array{gender: string, birth_date: ?string, birth_place: ?string, is_omocodia: bool}|null */
     public ?array $decodedDetails = null;
 
+    #[Url(as: 'match')]
     public bool $checkAgainstPerson = false;
 
     public string $matchFirstName = '';

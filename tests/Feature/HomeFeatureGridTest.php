@@ -65,13 +65,27 @@ it('leaves the Calculate card on the default mode with the matching disclosure c
         ->assertSee('&quot;checkAgainstPerson&quot;:false', false);
 });
 
-it('renders the feature grid correctly in both English and Italian', function () {
-    $this->get(route('home'))
-        ->assertSeeText(__('messages.home.features_heading', [], 'en'))
-        ->assertSeeText(__('messages.home.features.calculate.heading', [], 'en'));
+it('renders every card\'s own heading and description correctly in both English and Italian', function () {
+    $featureKeys = [
+        'calculate', 'decode', 'person_matching', 'omocodia', 'repository_swap',
+        'birth_date_resolver', 'birthplace_history', 'validation_rule', 'people',
+    ];
 
-    $this->withSession(['locale' => 'it'])
+    $response = $this->get(route('home'))->assertSeeText(__('messages.home.features_heading', [], 'en'));
+
+    foreach ($featureKeys as $key) {
+        $response
+            ->assertSeeText(__("messages.home.features.$key.heading", [], 'en'))
+            ->assertSeeText(__("messages.home.features.$key.description", [], 'en'));
+    }
+
+    $response = $this->withSession(['locale' => 'it'])
         ->get(route('home'))
-        ->assertSeeText(__('messages.home.features_heading', [], 'it'))
-        ->assertSeeText(__('messages.home.features.calculate.heading', [], 'it'));
+        ->assertSeeText(__('messages.home.features_heading', [], 'it'));
+
+    foreach ($featureKeys as $key) {
+        $response
+            ->assertSeeText(__("messages.home.features.$key.heading", [], 'it'))
+            ->assertSeeText(__("messages.home.features.$key.description", [], 'it'));
+    }
 });

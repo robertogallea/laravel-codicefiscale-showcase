@@ -98,6 +98,16 @@ return [
         ],
     ],
 
+    'repository_swap' => [
+        'heading' => 'Swap birthplace repositories',
+        'tagline' => 'The same fixed code below is resolved through two different implementations of the same BirthPlaceRepository contract — proof that generation, validation, and parsing never depend on any one data source.',
+        'repository_label' => 'Birthplace repository',
+        'real_label' => 'Real repository (ANPR/MAECI data)',
+        'demo_label' => 'Demo repository (fictional places)',
+        'demo_notice' => 'The Demo repository is a hand-authored fixture — Atlantis, Narnia, Wakanda — that exists only on this page, to prove the repository contract is swappable. It is never used anywhere else in this app: Calculate and Decode always use the Real repository.',
+        'code_label' => 'Demonstration code',
+    ],
+
     'breakdown' => [
         'surname' => 'Surname code — the first three consonants of the surname.',
         'name' => 'Name code — three letters taken from the first name.',

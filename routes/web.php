@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Explore\OmocodiaPlaygroundController;
+use App\Http\Controllers\Explore\RepositorySwapController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
@@ -12,3 +13,4 @@ Route::get('/locale/{locale}', LocaleController::class)
     ->name('locale.switch');
 
 Route::get('/explore/omocodia', OmocodiaPlaygroundController::class)->name('explore.omocodia');
+Route::get('/explore/repositories', RepositorySwapController::class)->name('explore.repositories');

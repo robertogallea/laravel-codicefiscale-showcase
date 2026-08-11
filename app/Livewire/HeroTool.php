@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Support\ValidationErrorPresenter;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
@@ -14,7 +15,6 @@ use Robertogallea\CodiceFiscale\Data\PartialPerson;
 use Robertogallea\CodiceFiscale\Data\Person;
 use Robertogallea\CodiceFiscale\Enums\Gender;
 use Robertogallea\CodiceFiscale\Enums\PersonField;
-use Robertogallea\CodiceFiscale\Enums\ValidationError;
 use Robertogallea\CodiceFiscale\Generation\Generator;
 use Robertogallea\CodiceFiscale\Matching\Matcher;
 use Robertogallea\CodiceFiscale\Matching\MatchResult;
@@ -162,7 +162,7 @@ class HeroTool extends Component
 
         if (! $result->valid()) {
             $this->decodeValid = false;
-            $this->decodeErrorMessage = $this->friendlyErrorMessage($result->errors());
+            $this->decodeErrorMessage = ValidationErrorPresenter::describe($result->errors());
 
             return;
         }
@@ -285,16 +285,5 @@ class HeroTool extends Component
             in_array($field, $result->mismatched(), true) => 'mismatched',
             default => 'skipped',
         };
-    }
-
-    /** @param  list<ValidationError>  $errors */
-    private function friendlyErrorMessage(array $errors): string
-    {
-        $messages = array_map(
-            fn (ValidationError $error) => __('messages.decode.errors.'.$error->value),
-            $errors,
-        );
-
-        return implode(' ', $messages);
     }
 }

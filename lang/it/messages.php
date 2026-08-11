@@ -94,6 +94,16 @@ return [
         ],
     ],
 
+    'repository_swap' => [
+        'heading' => 'Scambia i repository dei luoghi di nascita',
+        'tagline' => 'Lo stesso codice fisso qui sotto viene risolto attraverso due diverse implementazioni dello stesso contratto BirthPlaceRepository — la prova che generazione, validazione e parsing non dipendono mai da un\'unica fonte di dati.',
+        'repository_label' => 'Repository dei luoghi di nascita',
+        'real_label' => 'Repository reale (dati ANPR/MAECI)',
+        'demo_label' => 'Repository dimostrativo (luoghi immaginari)',
+        'demo_notice' => 'Il repository dimostrativo è una struttura fittizia scritta a mano — Atlantide, Narnia, Wakanda — che esiste solo in questa pagina, per dimostrare che il contratto del repository è scambiabile. Non viene mai usato altrove in questa app: Calcola e Decodifica usano sempre il repository reale.',
+        'code_label' => 'Codice dimostrativo',
+    ],
+
     'breakdown' => [
         'surname' => 'Codice cognome — le prime tre consonanti del cognome.',
         'name' => 'Codice nome — tre lettere prese dal nome.',

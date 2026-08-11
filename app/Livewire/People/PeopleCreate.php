@@ -58,6 +58,12 @@ class PeopleCreate extends Component
             'birthPlaceCode' => ['required', 'regex:/^[A-Z][0-9]{3}$/'],
             'codiceFiscale' => [
                 'required',
+                // Person::create() below would otherwise throw an
+                // uncaught UniqueConstraintViolationException on the
+                // people.codice_fiscale column for a resubmitted or
+                // already-seeded code - this turns that into a normal,
+                // translated field error instead of a 500.
+                'unique:people,codice_fiscale',
                 CodiceFiscaleRule::make()->matching(
                     firstName: 'firstName',
                     lastName: 'lastName',
@@ -69,6 +75,7 @@ class PeopleCreate extends Component
         ], [
             'birthPlaceCode.required' => __('messages.hero.fields.birth_place_unresolved'),
             'birthPlaceCode.regex' => __('messages.hero.fields.birth_place_unresolved'),
+            'codiceFiscale.unique' => __('messages.people.fields.codice_fiscale_taken'),
         ], [
             'codiceFiscale' => __('messages.people.fields.codice_fiscale'),
         ]);

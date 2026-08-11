@@ -10,11 +10,12 @@ use Robertogallea\CodiceFiscale\Contracts\BirthPlaceRepository;
  * options, deduped by BirthPlaceCode. Shared by every page with a
  * birthplace combobox (the hero tool's Calculate form and its
  * person-matching disclosure, the CenturyResolver/BirthDateResolver
- * playground) - search() is unfiltered by validity and returns most-
- * recent-era first, so a renamed/reprovinced comune's several era-
- * records sharing one code would otherwise appear as visually-
- * identical duplicate options; keeping the first occurrence per code
- * keeps only its current (most recent) era.
+ * playground, the People-directory create form) - search() is
+ * unfiltered by validity and returns most-recent-era first, so a
+ * renamed/reprovinced comune's several era-records sharing one code
+ * would otherwise appear as visually-identical duplicate options;
+ * keeping the first occurrence per code keeps only its current (most
+ * recent) era.
  */
 final class BirthPlaceOptionSearcher
 {

@@ -48,6 +48,23 @@ it('rejects a code that mismatches the entered gender with a field-specific mess
     expect(Person::where('codice_fiscale', $code)->exists())->toBeFalse();
 });
 
+it('rejects a codice_fiscale that already belongs to another person, rather than crashing on the DB unique constraint', function () {
+    $code = validCodeForMilano();
+    Person::factory()->create(['codice_fiscale' => $code]);
+
+    Livewire::test(PeopleCreate::class)
+        ->set('firstName', 'Mario')
+        ->set('lastName', 'Rossi')
+        ->set('birthDate', '1995-05-05')
+        ->set('gender', 'M')
+        ->set('birthPlaceCode', 'F205')
+        ->set('codiceFiscale', $code)
+        ->call('create')
+        ->assertHasErrors(['codiceFiscale' => 'unique']);
+
+    expect(Person::where('codice_fiscale', $code)->count())->toBe(1);
+});
+
 it('rejects a structurally invalid code with the rule\'s standard message, not a mismatch message', function () {
     Livewire::test(PeopleCreate::class)
         ->set('firstName', 'Mario')

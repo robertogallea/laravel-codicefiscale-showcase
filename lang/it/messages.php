@@ -159,6 +159,7 @@ return [
             'birth_place_placeholder' => 'Cerca un comune o uno stato estero…',
             'codice_fiscale' => 'Codice fiscale',
             'codice_fiscale_placeholder' => 'es. RSSMRA95E05F205Z',
+            'codice_fiscale_taken' => 'Esiste già una persona con questo codice fiscale.',
         ],
         'create' => [
             'heading' => 'Aggiungi una persona',

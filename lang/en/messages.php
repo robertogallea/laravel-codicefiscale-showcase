@@ -163,6 +163,7 @@ return [
             'birth_place_placeholder' => 'Search a comune or country…',
             'codice_fiscale' => 'Codice fiscale',
             'codice_fiscale_placeholder' => 'e.g. RSSMRA95E05F205Z',
+            'codice_fiscale_taken' => 'A person with this codice fiscale already exists.',
         ],
         'create' => [
             'heading' => 'Add a person',

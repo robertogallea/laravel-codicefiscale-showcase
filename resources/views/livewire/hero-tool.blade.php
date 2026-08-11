@@ -104,7 +104,9 @@
                         </div>
                     </dl>
 
-                    <flux:switch wire:model.live="checkAgainstPerson" label="{{ __('messages.decode.match.toggle') }}" />
+                    <div class="max-w-lg">
+                        <flux:switch wire:model.live="checkAgainstPerson" label="{{ __('messages.decode.match.toggle') }}" />
+                    </div>
 
                     @if ($checkAgainstPerson)
                         <form wire:submit="checkMatch" class="grid max-w-lg gap-4">

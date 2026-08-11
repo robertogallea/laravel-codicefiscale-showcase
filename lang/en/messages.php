@@ -30,6 +30,34 @@ return [
             'birth_place_placeholder' => 'Search a comune or country…',
             'birth_place_unresolved' => 'Select a birthplace from the suggestions.',
             'submit' => 'Generate',
+            'verify' => 'Verify this code',
+        ],
+        'decode' => [
+            'tab' => 'Decode',
+            'input' => 'Codice fiscale',
+            'input_placeholder' => 'e.g. RSSMRA95E05F205Z',
+            'submit' => 'Decode',
+        ],
+    ],
+
+    'decode' => [
+        'errors' => [
+            'invalid_format' => 'This is not a well-formed codice fiscale (wrong length or characters).',
+            'invalid_checksum' => 'The check character doesn\'t match the rest of the code — check for a typo.',
+            'invalid_date' => 'The encoded birth date doesn\'t exist on the calendar.',
+            'unknown_birth_place' => 'The encoded birthplace code isn\'t recognized.',
+            'birth_place_not_valid_on_date' => 'The encoded birthplace wasn\'t valid on the encoded birth date.',
+        ],
+        'result' => [
+            'gender' => 'Gender',
+            'gender_male' => 'Male',
+            'gender_female' => 'Female',
+            'birth_date' => 'Birth date',
+            'birth_place' => 'Birth place',
+            'birth_place_unknown' => 'Unknown',
+            'omocodia' => 'Omocodia variant',
+            'yes' => 'Yes',
+            'no' => 'No',
         ],
     ],
 

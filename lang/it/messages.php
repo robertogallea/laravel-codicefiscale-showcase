@@ -30,6 +30,34 @@ return [
             'birth_place_placeholder' => 'Cerca un comune o uno stato estero…',
             'birth_place_unresolved' => 'Seleziona un luogo di nascita dai suggerimenti.',
             'submit' => 'Genera',
+            'verify' => 'Verifica questo codice',
+        ],
+        'decode' => [
+            'tab' => 'Decodifica',
+            'input' => 'Codice fiscale',
+            'input_placeholder' => 'es. RSSMRA95E05F205Z',
+            'submit' => 'Decodifica',
+        ],
+    ],
+
+    'decode' => [
+        'errors' => [
+            'invalid_format' => 'Non è un codice fiscale ben formato (lunghezza o caratteri errati).',
+            'invalid_checksum' => 'Il carattere di controllo non corrisponde al resto del codice — controlla che non ci sia un errore di battitura.',
+            'invalid_date' => 'La data di nascita codificata non esiste nel calendario.',
+            'unknown_birth_place' => 'Il codice del luogo di nascita codificato non è riconosciuto.',
+            'birth_place_not_valid_on_date' => 'Il luogo di nascita codificato non era valido alla data di nascita codificata.',
+        ],
+        'result' => [
+            'gender' => 'Sesso',
+            'gender_male' => 'Maschio',
+            'gender_female' => 'Femmina',
+            'birth_date' => 'Data di nascita',
+            'birth_place' => 'Luogo di nascita',
+            'birth_place_unknown' => 'Sconosciuto',
+            'omocodia' => 'Variante omocodica',
+            'yes' => 'Sì',
+            'no' => 'No',
         ],
     ],
 

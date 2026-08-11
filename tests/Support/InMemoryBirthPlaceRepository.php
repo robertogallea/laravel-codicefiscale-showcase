@@ -34,6 +34,11 @@ final class InMemoryBirthPlaceRepository implements BirthPlaceRepository
             new DomesticBirthPlace(BirthPlaceCode::from('F205'), 'Milano', 'MI', '015146', $reprovincedOn),
             new DomesticBirthPlace(BirthPlaceCode::from('H501'), 'Roma', 'RM', '058091', $epoch),
             new ForeignBirthPlace(BirthPlaceCode::from('Z404'), 'Stati Uniti d\'America', CountryCode::from('USA'), $epoch),
+            // Exists, but only from 1990 onward - a code that's valid
+            // today yet not on an earlier birth date, distinguishing
+            // "never existed" (A999, not in this list at all) from
+            // "existed, wrong date".
+            new ForeignBirthPlace(BirthPlaceCode::from('Z999'), 'Nuova Nazione', CountryCode::from('ZZZ'), new \DateTimeImmutable('1990-01-01')),
         ];
     }
 

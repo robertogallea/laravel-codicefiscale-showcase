@@ -30,4 +30,4 @@ DOCKER_BUILDKIT=1 docker build \
   --tag laravel-codicefiscale-showcase:local .
 ```
 
-Il piano gratuito ha filesystem effimero: il database SQLite e il dataset aggiornato restano disponibili fino al successivo deploy, restart o sleep dell'istanza. L'immagine contiene comunque un dataset iniziale aggiornato durante ogni build.
+Il piano gratuito ha filesystem effimero: il database SQLite e il dataset aggiornato restano disponibili fino al successivo deploy, restart o sleep dell'istanza. L'immagine contiene comunque un dataset iniziale aggiornato durante ogni build, inclusi tre profili demo deterministici che non richiedono Faker in produzione.

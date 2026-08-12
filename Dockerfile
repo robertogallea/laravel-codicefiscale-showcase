@@ -43,7 +43,8 @@ RUN chmod +x /usr/local/bin/start-container \
     && mkdir -p storage/app/codicefiscale storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && touch database/database.sqlite \
     && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan package:discover --ansi \
-    && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan migrate --force --seed \
+    && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan migrate --force \
+    && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan db:seed --class=Database\\Seeders\\ProductionDemoSeeder --force \
     && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan codice-fiscale:update-places \
     && chown -R www-data:www-data bootstrap/cache database storage
 

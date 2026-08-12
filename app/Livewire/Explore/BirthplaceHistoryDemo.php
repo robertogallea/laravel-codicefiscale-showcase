@@ -46,6 +46,17 @@ class BirthplaceHistoryDemo extends Component
 
     public function resolve(): void
     {
+        if ($this->date === '') {
+            // new DateTimeImmutable('') would silently resolve to "now"
+            // rather than erroring - treat a blanked date field as "not
+            // computable yet" instead of a misleading today-based result.
+            $noDateResult = ['status' => 'no_date', 'name' => null, 'province' => null];
+            $this->historyResult = $noDateResult;
+            $this->neverExistedResult = $noDateResult;
+
+            return;
+        }
+
         $repository = app(BirthPlaceRepository::class);
         $date = new \DateTimeImmutable($this->date);
 

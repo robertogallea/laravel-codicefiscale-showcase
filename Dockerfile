@@ -28,7 +28,7 @@ FROM php:8.4-fpm-alpine AS runtime
 
 WORKDIR /app
 
-RUN apk add --no-cache nginx gettext libzip-dev libxml2-dev \
+RUN apk add --no-cache nginx gettext libzip-dev libxml2-dev sqlite-dev \
     && docker-php-ext-install pdo_sqlite zip dom \
     && mkdir -p /run/nginx /var/lib/nginx /tmp/nginx
 

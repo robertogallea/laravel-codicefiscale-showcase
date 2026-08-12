@@ -48,6 +48,10 @@
         />
 
         <div>
+            @error('creation')
+                <p class="mb-3 text-sm text-red-600" role="alert">{{ $message }}</p>
+            @enderror
+
             <flux:button type="submit" variant="primary">
                 {{ __('messages.people.create.submit') }}
             </flux:button>

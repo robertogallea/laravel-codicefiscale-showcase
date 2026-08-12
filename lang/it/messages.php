@@ -217,6 +217,7 @@ return [
             'heading' => 'Aggiungi una persona',
             'tagline' => 'Validato da CodiceFiscaleRule::make()->matching() - la forma fluente e cross-field della regola codice_fiscale. A differenza della regola elementare nella pagina Explore sulla validazione, questa controlla il codice inserito rispetto a ciascun campo personale qui sotto, e fallisce indicando lo specifico campo che non corrisponde, non un errore generico.',
             'submit' => 'Crea',
+            'rate_limited' => 'Sono state create troppe persone da questo indirizzo. Riprova tra qualche minuto.',
         ],
         'show' => [
             'reparse_heading' => 'Ridecodifica dal vivo',

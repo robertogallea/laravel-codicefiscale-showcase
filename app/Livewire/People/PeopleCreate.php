@@ -5,6 +5,7 @@ namespace App\Livewire\People;
 use App\Models\Person;
 use App\Support\BirthPlaceOptionSearcher;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Robertogallea\CodiceFiscale\Contracts\BirthPlaceRepository;
@@ -12,6 +13,10 @@ use Robertogallea\CodiceFiscale\Laravel\Rules\CodiceFiscaleRule;
 
 class PeopleCreate extends Component
 {
+    private const RATE_LIMIT_ATTEMPTS = 5;
+
+    private const RATE_LIMIT_DECAY_SECONDS = 600;
+
     public string $firstName = '';
 
     public string $lastName = '';
@@ -80,11 +85,21 @@ class PeopleCreate extends Component
             'codiceFiscale' => __('messages.people.fields.codice_fiscale'),
         ]);
 
+        $rateLimitKey = 'people-create:'.request()->ip();
+
+        if (RateLimiter::tooManyAttempts($rateLimitKey, self::RATE_LIMIT_ATTEMPTS)) {
+            $this->addError('creation', __('messages.people.create.rate_limited'));
+
+            return;
+        }
+
         $person = Person::create([
             'first_name' => $validated['firstName'],
             'last_name' => $validated['lastName'],
             'codice_fiscale' => $validated['codiceFiscale'],
         ]);
+
+        RateLimiter::hit($rateLimitKey, self::RATE_LIMIT_DECAY_SECONDS);
 
         $this->redirectRoute('people.show', $person);
     }

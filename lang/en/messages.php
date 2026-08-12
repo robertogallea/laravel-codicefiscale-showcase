@@ -221,6 +221,7 @@ return [
             'heading' => 'Add a person',
             'tagline' => 'Validated by CodiceFiscaleRule::make()->matching() - the fluent, cross-field-aware form of the codice_fiscale rule. Unlike the plain rule on the validation-rule Explore page, this checks the submitted code against every personal field below, and fails on the specific field that doesn\'t match rather than a generic error.',
             'submit' => 'Create',
+            'rate_limited' => 'Too many people were created from this address. Please try again in a few minutes.',
         ],
         'show' => [
             'reparse_heading' => 'Live re-parse',

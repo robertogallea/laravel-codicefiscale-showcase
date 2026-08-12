@@ -2,6 +2,7 @@
 
 use App\Livewire\People\PeopleCreate;
 use App\Models\Person;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Livewire;
 
 it('renders the page at its own route', function () {
@@ -9,6 +10,7 @@ it('renders the page at its own route', function () {
 });
 
 it('creates a person and redirects to the show page when the code matches the entered data', function () {
+    RateLimiter::clear('people-create:127.0.0.1');
     $code = validCodeForMilano();
 
     $component = Livewire::test(PeopleCreate::class)
@@ -24,9 +26,43 @@ it('creates a person and redirects to the show page when the code matches the en
 
     expect($person)->not->toBeNull()
         ->and($person->first_name)->toBe('Mario')
-        ->and($person->last_name)->toBe('Rossi');
+        ->and($person->last_name)->toBe('Rossi')
+        ->and(RateLimiter::attempts('people-create:127.0.0.1'))->toBe(1);
 
     $component->assertRedirect(route('people.show', $person));
+});
+
+it('rejects person creation after five successful creations from the same IP', function () {
+    $rateLimitKey = 'people-create:127.0.0.1';
+    RateLimiter::clear($rateLimitKey);
+
+    foreach (range(1, 5) as $attempt) {
+        RateLimiter::hit($rateLimitKey, 600);
+    }
+
+    Livewire::test(PeopleCreate::class)
+        ->set('firstName', 'Mario')
+        ->set('lastName', 'Rossi')
+        ->set('birthDate', '1995-05-05')
+        ->set('gender', 'M')
+        ->set('birthPlaceCode', 'F205')
+        ->set('codiceFiscale', validCodeForMilano())
+        ->call('create')
+        ->assertHasErrors('creation');
+
+    expect(Person::query()->count())->toBe(0);
+});
+
+it('does not count invalid person creation attempts against the rate limit', function () {
+    $rateLimitKey = 'people-create:127.0.0.1';
+    RateLimiter::clear($rateLimitKey);
+
+    Livewire::test(PeopleCreate::class)
+        ->set('codiceFiscale', 'not-a-code')
+        ->call('create')
+        ->assertHasErrors('codiceFiscale');
+
+    expect(RateLimiter::attempts($rateLimitKey))->toBe(0);
 });
 
 it('rejects a code that mismatches the entered gender with a field-specific message, not a generic error', function () {

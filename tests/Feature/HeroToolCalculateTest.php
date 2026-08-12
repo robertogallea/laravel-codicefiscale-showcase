@@ -45,6 +45,17 @@ it('surfaces domestic and foreign birthplace matches from the same search field,
         ->and($component->get('birthPlaceOptions')[0]['label'])->toBe('Stati Uniti d\'America (Z404)');
 });
 
+it('surfaces the exact match for a full cadastral code query', function () {
+    // "F205" doesn't textually appear in "Milano" - this only resolves
+    // through the exact BirthPlaceRepository::find() lookup path.
+    $options = Livewire::test(HeroTool::class)
+        ->set('birthPlaceQuery', 'F205')
+        ->get('birthPlaceOptions');
+
+    expect($options)->toHaveCount(1)
+        ->and($options[0]['label'])->toBe('Milano (F205)');
+});
+
 it('deduplicates era-records that share a birthplace code into one option', function () {
     // The fixture repository holds two era-records for F205 (Milano) -
     // an old province and the current one - to mirror the real trap

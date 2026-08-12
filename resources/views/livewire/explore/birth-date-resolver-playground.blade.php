@@ -4,7 +4,7 @@
             type="number"
             min="1"
             max="12"
-            wire:model.live="month"
+            wire:model.live.debounce.400ms="month"
             label="{{ __('messages.birth_date_resolver.month_label') }}"
         />
 
@@ -12,12 +12,12 @@
             type="number"
             min="1"
             max="31"
-            wire:model.live="day"
+            wire:model.live.debounce.400ms="day"
             label="{{ __('messages.birth_date_resolver.day_label') }}"
         />
 
         <flux:input
-            wire:model.live="twoDigitYear"
+            wire:model.live.debounce.400ms="twoDigitYear"
             maxlength="2"
             label="{{ __('messages.birth_date_resolver.two_digit_year_label') }}"
         />
@@ -25,7 +25,7 @@
         <flux:input
             type="number"
             min="0"
-            wire:model.live="maxAge"
+            wire:model.live.debounce.400ms="maxAge"
             label="{{ __('messages.birth_date_resolver.max_age_label') }}"
         />
     </form>

@@ -3523,16 +3523,16 @@
         },
         {
             "name": "robertogallea/laravel-codicefiscale",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robertogallea/laravel-codicefiscale.git",
-                "reference": "68e46f0b624b9d29ba03f18ab74ff0e29b4d591c"
+                "reference": "b6979d95e1ef6539daacd549874be0fe0d3e068c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robertogallea/laravel-codicefiscale/zipball/68e46f0b624b9d29ba03f18ab74ff0e29b4d591c",
-                "reference": "68e46f0b624b9d29ba03f18ab74ff0e29b4d591c",
+                "url": "https://api.github.com/repos/robertogallea/laravel-codicefiscale/zipball/b6979d95e1ef6539daacd549874be0fe0d3e068c",
+                "reference": "b6979d95e1ef6539daacd549874be0fe0d3e068c",
                 "shasum": ""
             },
             "require": {
@@ -3578,7 +3578,7 @@
             "description": "Codice fiscale validation for php/laravel",
             "support": {
                 "issues": "https://github.com/robertogallea/laravel-codicefiscale/issues",
-                "source": "https://github.com/robertogallea/laravel-codicefiscale/tree/3.0.0"
+                "source": "https://github.com/robertogallea/laravel-codicefiscale/tree/3.0.1"
             },
             "funding": [
                 {
@@ -3586,7 +3586,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-12T07:59:33+00:00"
+            "time": "2026-08-12T10:37:00+00:00"
         },
         {
             "name": "symfony/clock",

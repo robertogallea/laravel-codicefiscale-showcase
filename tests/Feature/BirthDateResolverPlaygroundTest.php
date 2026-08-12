@@ -95,6 +95,79 @@ it('shows a single, non-ambiguous candidate when only one interpretation is a re
         ->assertSet('resolvedDate', '2000-02-29');
 });
 
+it('does not crash and clears the resolved date when month is blanked', function () {
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->set('day', 20)
+        ->set('twoDigitYear', '26')
+        ->set('month', '')
+        ->call('resolve')
+        ->assertSet('possibleYears', [1926, 2026])
+        ->assertSet('resolvedDate', null)
+        ->assertSeeText(__('messages.birth_date_resolver.no_plausible_date'));
+});
+
+it('does not crash when month is explicitly null', function () {
+    // No extra ->call('resolve') here deliberately: Livewire itself never
+    // restores a typed property back to a literal null across a request
+    // boundary (HandleComponents::hydrateProperties() skips it and falls
+    // back to the class default) - a pre-existing Livewire limitation,
+    // not a real browser scenario (a cleared input sends '', never null),
+    // and not something this fix needs to work around.
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->set('month', null)
+        ->assertSet('resolvedDate', null);
+});
+
+it('does not crash and clears the resolved date when day is blanked', function () {
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->set('day', '')
+        ->call('resolve')
+        ->assertSet('resolvedDate', null);
+});
+
+it('does not crash and clears both possible years and the resolved date when the two-digit year is blanked', function () {
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->set('twoDigitYear', '')
+        ->call('resolve')
+        ->assertSet('possibleYears', null)
+        ->assertSet('resolvedDate', null);
+});
+
+it('does not crash and clears the resolved date when maxAge is blanked', function () {
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->set('month', 5)
+        ->set('day', 20)
+        ->set('twoDigitYear', '26')
+        ->set('maxAge', '')
+        ->call('resolve')
+        ->assertSet('possibleYears', [1926, 2026])
+        ->assertSet('resolvedDate', null);
+});
+
+it('recovers a resolved date once a blanked field is filled back in', function () {
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->set('month', 5)
+        ->set('day', 20)
+        ->set('twoDigitYear', '26')
+        ->set('birthPlaceCode', 'F205')
+        ->call('resolve')
+        ->assertSet('resolvedDate', '2026-05-20')
+        ->set('month', '')
+        ->call('resolve')
+        ->assertSet('resolvedDate', null)
+        ->set('month', 5)
+        ->call('resolve')
+        ->assertSet('resolvedDate', '2026-05-20');
+});
+
+it('debounces the month, day, two-digit year, and max age inputs', function () {
+    Livewire::test(BirthDateResolverPlayground::class)
+        ->assertSee('wire:model.live.debounce.400ms="month"', false)
+        ->assertSee('wire:model.live.debounce.400ms="day"', false)
+        ->assertSee('wire:model.live.debounce.400ms="twoDigitYear"', false)
+        ->assertSee('wire:model.live.debounce.400ms="maxAge"', false);
+});
+
 it('renders correctly in both English and Italian', function () {
     Livewire::test(BirthDateResolverPlayground::class)
         ->assertSeeText(__('messages.birth_date_resolver.max_age_label', [], 'en'));

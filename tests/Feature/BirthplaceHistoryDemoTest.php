@@ -59,6 +59,15 @@ it('distinguishes a code that never existed from one that existed but not on thi
         ->assertSeeText(__('messages.birthplace_history.never_existed'));
 });
 
+it('shows a neutral no-date state without crashing when the date field is blanked', function () {
+    Livewire::test(BirthplaceHistoryDemo::class)
+        ->set('date', '')
+        ->call('resolve')
+        ->assertSet('historyResult.status', 'no_date')
+        ->assertSet('neverExistedResult.status', 'no_date')
+        ->assertSeeText(__('messages.birthplace_history.no_date'));
+});
+
 it('renders correctly in both English and Italian', function () {
     Livewire::test(BirthplaceHistoryDemo::class)
         ->set('date', '1850-01-01')

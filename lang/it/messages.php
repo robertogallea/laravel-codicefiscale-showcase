@@ -179,6 +179,7 @@ return [
         'province_label' => 'Provincia',
         'not_valid_on_date' => 'Esisteva, ma non era valido a questa data.',
         'never_existed' => 'Mai esistito.',
+        'no_date' => 'Inserisci una data per vedere il risultato.',
     ],
 
     'validation_rule' => [

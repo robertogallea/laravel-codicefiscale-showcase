@@ -25,4 +25,8 @@
             {{ __('messages.birthplace_history.never_existed') }}
         </flux:badge>
         @break
+
+    @case('no_date')
+        <flux:text size="sm" variant="subtle">{{ __('messages.birthplace_history.no_date') }}</flux:text>
+        @break
 @endswitch

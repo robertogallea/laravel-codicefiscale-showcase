@@ -10,10 +10,15 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-white text-zinc-800 dark:bg-zinc-900 dark:text-white">
-    <header class="border-b border-zinc-200 dark:border-zinc-700">
+<body class="min-h-screen bg-sfondo font-sans text-inchiostro dark:bg-bosco-night dark:text-avorio">
+    <header class="border-b border-filigrana dark:border-filigrana-night">
         <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-            <a href="{{ route('home') }}" class="text-lg font-semibold">
+            <a
+                href="{{ route('home') }}"
+                class="flex items-center gap-3 text-lg font-semibold text-inchiostro dark:text-avorio"
+                aria-label="{{ __('messages.nav.back_to_hero') }}"
+            >
+                <x-tessera-mark class="h-7 w-10 shrink-0" />
                 {{ config('app.name') }}
             </a>
 
@@ -21,12 +26,12 @@
                 <nav class="flex items-center gap-2 text-sm">
                     <a
                         href="{{ route('locale.switch', 'en') }}"
-                        class="{{ app()->getLocale() === 'en' ? 'font-semibold' : 'text-zinc-500 dark:text-zinc-400' }}"
+                        class="{{ app()->getLocale() === 'en' ? 'font-semibold' : 'text-salvia dark:text-salvia-bright' }}"
                     >EN</a>
-                    <span class="text-zinc-300 dark:text-zinc-600">/</span>
+                    <span class="text-filigrana dark:text-filigrana-night">/</span>
                     <a
                         href="{{ route('locale.switch', 'it') }}"
-                        class="{{ app()->getLocale() === 'it' ? 'font-semibold' : 'text-zinc-500 dark:text-zinc-400' }}"
+                        class="{{ app()->getLocale() === 'it' ? 'font-semibold' : 'text-salvia dark:text-salvia-bright' }}"
                     >IT</a>
                 </nav>
 

@@ -5,6 +5,10 @@ return [
     'home' => [
         'tagline' => 'A showcase of every laravel-codicefiscale v3 feature.',
         'features_heading' => 'Explore every feature',
+        'card' => [
+            'eyebrow' => 'Demonstration card',
+            'edition' => 'Ed. :year',
+        ],
         'features' => [
             'calculate' => [
                 'heading' => 'Calculate',
@@ -54,6 +58,15 @@ return [
         'light' => 'Light',
         'dark' => 'Dark',
         'system' => 'System',
+    ],
+
+    'nav' => [
+        'label' => 'Feature navigation',
+        'back_to_hero' => 'Back to the card',
+        'prev' => 'Previous',
+        'next' => 'Next',
+        'quadro' => 'Quadro :code',
+        'position' => ':position of :total',
     ],
 
     'hero' => [

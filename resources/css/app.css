@@ -9,6 +9,54 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Newsreader', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+    /*
+     * A traditional codice fiscale card's own palette: the deep printed
+     * green of the card stock ("bosco"), the pale card-field paper it's
+     * printed on ("pergamena"), a muted secondary green for supporting
+     * text ("salvia"), the ink the code itself is printed in
+     * ("inchiostro"/"avorio"), a rare stamp-red reserved for the one
+     * place this app deliberately calls something out ("timbro"), and
+     * the hairline security-print rule that borders the card
+     * ("filigrana"). "Sfondo" is the page surface the card sits on -
+     * deliberately a shade apart from "pergamena" so the hero (and
+     * every card-shaped panel) reads as an object resting on the page,
+     * not a seam-free extension of it. Each has a
+     * "-night"/"-panel"/"-bright" counterpart for dark mode instead of
+     * leaning on Tailwind's stock zinc scale, so the identity survives
+     * the theme switch.
+     */
+    --color-bosco: #123b2c;
+    --color-bosco-night: #0a1712;
+    --color-salvia: #4f7a5e;
+    --color-salvia-bright: #8fc3a0;
+    --color-sfondo: #e9eee7;
+    --color-pergamena: #f1ecdc;
+    --color-pergamena-panel: #1c3b27;
+    --color-inchiostro: #1b231f;
+    --color-avorio: #ede6d3;
+    --color-timbro: #a23328;
+    --color-filigrana: #d7e1d0;
+    --color-filigrana-night: #234032;
+
+    /*
+     * Retint Flux's own accent tokens (defined in flux.css) so every
+     * Flux primary button, active tab, and focus ring reads as this
+     * card's green rather than Flux's default zinc/white.
+     */
+    --color-accent: var(--color-bosco);
+    --color-accent-content: var(--color-bosco);
+    --color-accent-foreground: var(--color-pergamena);
+}
+
+@layer theme {
+    .dark {
+        --color-accent: var(--color-salvia-bright);
+        --color-accent-content: var(--color-salvia-bright);
+        --color-accent-foreground: var(--color-bosco-night);
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'update_token' => env('CODICEFISCALE_UPDATE_TOKEN'),
+
     'database' => [
         // Path to the dedicated SQLite file backing the birthplace
         // repository. Never the host application's own database -

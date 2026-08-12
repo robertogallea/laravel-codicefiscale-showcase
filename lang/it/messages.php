@@ -5,6 +5,10 @@ return [
     'home' => [
         'tagline' => 'Una vetrina di tutte le funzionalità di laravel-codicefiscale v3.',
         'features_heading' => 'Esplora tutte le funzionalità',
+        'card' => [
+            'eyebrow' => 'Scheda dimostrativa',
+            'edition' => 'Ed. :year',
+        ],
         'features' => [
             'calculate' => [
                 'heading' => 'Calcola',
@@ -54,6 +58,15 @@ return [
         'light' => 'Chiaro',
         'dark' => 'Scuro',
         'system' => 'Sistema',
+    ],
+
+    'nav' => [
+        'label' => 'Navigazione tra le funzionalità',
+        'back_to_hero' => 'Torna alla tessera',
+        'prev' => 'Precedente',
+        'next' => 'Successivo',
+        'quadro' => 'Quadro :code',
+        'position' => ':position di :total',
     ],
 
     'hero' => [

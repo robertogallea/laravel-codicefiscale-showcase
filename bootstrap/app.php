@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Render terminates TLS before forwarding requests to this container.
+        // Trust its forwarded headers so Laravel generates HTTPS asset and route URLs.
+        $middleware->trustProxies(at: '*');
         $middleware->appendToGroup('web', SetLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

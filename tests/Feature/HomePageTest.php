@@ -14,6 +14,18 @@ it('renders successfully in Italian once the locale is switched', function () {
         ->assertSee('Una vetrina di tutte le funzionalità di laravel-codicefiscale v3.');
 });
 
+it('generates HTTPS asset URLs behind a trusted TLS-terminating proxy', function () {
+    $this->withServerVariables([
+        'REMOTE_ADDR' => '10.0.0.1',
+        'HTTP_X_FORWARDED_FOR' => '203.0.113.1',
+        'HTTP_X_FORWARDED_HOST' => 'showcase.example.test',
+        'HTTP_X_FORWARDED_PROTO' => 'https',
+    ])->get('/')
+        ->assertOk()
+        ->assertSee('https://showcase.example.test/build/assets/', false)
+        ->assertDontSee('http://showcase.example.test/build/assets/', false);
+});
+
 it('shows the birthplace data freshness date read from the package database file', function () {
     $path = tempnam(sys_get_temp_dir(), 'places').'.sqlite';
     touch($path, mktime(0, 0, 0, 1, 15, 2026));

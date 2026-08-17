@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Internal;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -11,7 +12,7 @@ use Throwable;
 
 class RefreshCodiceFiscaleDataController extends Controller
 {
-    public function __invoke(): Response
+    public function __invoke(): Response|JsonResponse
     {
         $token = config('codicefiscale.update_token');
 

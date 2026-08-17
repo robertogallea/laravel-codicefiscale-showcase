@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Route;
 
 it('excludes CSRF/forgery protection from the scheduler endpoint', function () {
@@ -80,4 +81,33 @@ it('reports a failure without a TypeError when the update command throws', funct
     ])
         ->assertStatus(500)
         ->assertJson(['message' => 'Birthplace data refresh failed.']);
+});
+
+it('registers codice-fiscale:update-places even when the app is not running in console', function () {
+    // laravel-codicefiscale only registers this command inside
+    // `if ($this->app->runningInConsole())` (see CodiceFiscaleServiceProvider::boot()).
+    // Artisan::call() from RefreshCodiceFiscaleDataController runs during a normal web
+    // request, where runningInConsole() is false - so without AppServiceProvider
+    // registering the command itself, Artisan::call() throws CommandNotFoundException.
+    //
+    // Every Pest test runs under the CLI SAPI, so runningInConsole() is always true in
+    // this process and can't reproduce that. Boot a fresh, separate app process instead,
+    // with APP_RUNNING_IN_CONSOLE forced false, to reproduce the real web-request context.
+    $script = <<<'PHP'
+        putenv('APP_RUNNING_IN_CONSOLE=false');
+
+        require 'vendor/autoload.php';
+
+        $app = require 'bootstrap/app.php';
+
+        $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+        $kernel->bootstrap();
+
+        echo array_key_exists('codice-fiscale:update-places', $kernel->all()) ? 'registered' : 'missing';
+        PHP;
+
+    $result = Process::path(base_path())->run(['php', '-r', $script]);
+
+    expect($result->successful())->toBeTrue($result->errorOutput());
+    expect($result->output())->toBe('registered');
 });

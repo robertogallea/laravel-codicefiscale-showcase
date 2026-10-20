@@ -9,7 +9,7 @@ jobs:
   mirror:
     # ANPR's WAF rejects requests from Render's network but not from
     # GitHub's runners, so the runner fetches the sources and mirrors
-    # them to a release that the Render app downloads from instead.
+    # them to a release that the Render build downloads from instead.
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -45,18 +45,17 @@ jobs:
                  --notes "Weekly mirror of the ANPR birthplace sources, refreshed by update-codicefiscale-data.yml. Not a software release."
           gh release upload "$RELEASE_TAG" --clobber ANPR_archivio_comuni.csv tabella_2_statiesteri.xlsx
 
-  refresh:
+  deploy:
+    # The Docker build imports the mirrored sources (see Dockerfile), so a
+    # fresh build is what refreshes the birthplace data in production.
     needs: mirror
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
-      - name: Trigger the protected Render refresh endpoint
+      - name: Trigger a Render deploy
         env:
-          RENDER_APP_URL: ${{ secrets.RENDER_APP_URL }}
-          UPDATE_TOKEN: ${{ secrets.CODICEFISCALE_UPDATE_TOKEN }}
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl --fail-with-body --show-error --silent \
-            --retry 3 --retry-all-errors --connect-timeout 30 --max-time 480 \
-            --request POST \
-            --header "X-Codicefiscale-Update-Token: ${UPDATE_TOKEN}" \
-            "${RENDER_APP_URL%/}/internal/jobs/codice-fiscale-update"
+            --retry 3 --retry-all-errors --connect-timeout 30 \
+            --request POST "$RENDER_DEPLOY_HOOK_URL"

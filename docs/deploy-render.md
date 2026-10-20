@@ -3,8 +3,7 @@
 Il file `render.yaml` crea il web service gratuito. Prima del primo deploy:
 
 1. In Render, crea un Blueprint dal repository.
-2. Nella pagina **Environment** del servizio, imposta `CODICEFISCALE_UPDATE_TOKEN` con un valore casuale e lungo.
-3. Aggiungi un Secret File denominato `composer_auth`. Il suo contenuto deve essere un `auth.json` Composer con l'email del tuo account Flux e la sua license key:
+2. Aggiungi un Secret File denominato `composer_auth`. Il suo contenuto deve essere un `auth.json` Composer con l'email del tuo account Flux e la sua license key:
 
    ```json
    {
@@ -18,9 +17,9 @@ Il file `render.yaml` crea il web service gratuito. Prima del primo deploy:
    ```
 
    Recupera entrambi i valori dal dashboard Flux. Il Dockerfile monta questo file solo durante `composer install`, senza copiarlo nell'immagine.
-4. Dopo il deploy, salva in GitHub Actions i secret `RENDER_APP_URL` (l'URL pubblico Render) e `CODICEFISCALE_UPDATE_TOKEN` (lo stesso valore di Render).
+3. Nelle **Settings** del servizio, copia il **Deploy Hook** e salvalo in GitHub Actions come secret `RENDER_DEPLOY_HOOK_URL`.
 
-Il workflow `.github/workflows/update-codicefiscale-data.yml` aggiorna i dati dei luoghi di nascita ogni lunedì alle 03:00 UTC e può essere avviato manualmente dalla scheda Actions.
+Il WAF di ANPR blocca le richieste provenienti dalla rete di Render, quindi la build non scarica i dati da ANPR. Il workflow `.github/workflows/update-codicefiscale-data.yml`, ogni lunedì alle 03:00 UTC (o manualmente dalla scheda Actions), scarica da ANPR il CSV dei comuni e la tabella degli stati esteri, li pubblica come asset della release `anpr-sources` e avvia un deploy tramite il Deploy Hook. La build scarica gli asset dalla release e li importa con `php artisan codice-fiscale:import-places`. Il repository deve essere pubblico perché la build possa scaricare gli asset senza autenticazione; prima del primo deploy esegui il workflow una volta, così la release esiste già.
 
 Per verificare la build in locale, passa il file di autenticazione Composer come secret BuildKit:
 
@@ -30,4 +29,4 @@ DOCKER_BUILDKIT=1 docker build \
   --tag laravel-codicefiscale-showcase:local .
 ```
 
-Il piano gratuito ha filesystem effimero: il database SQLite e il dataset aggiornato restano disponibili fino al successivo deploy, restart o sleep dell'istanza. L'immagine contiene comunque un dataset iniziale aggiornato durante ogni build, inclusi tre profili demo deterministici che non richiedono Faker in produzione.
+Il piano gratuito ha filesystem effimero: il database SQLite resta disponibile fino al successivo deploy, restart o sleep dell'istanza. Il dataset dei luoghi di nascita fa parte dell'immagine, quindi sopravvive ai restart e viene aggiornato a ogni build, insieme a tre profili demo deterministici che non richiedono Faker in produzione.

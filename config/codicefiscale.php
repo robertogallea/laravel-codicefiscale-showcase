@@ -13,8 +13,11 @@ return [
 
     // Sources for `codice-fiscale:update-places`. Never fetched
     // during normal validation - only when this command is run.
+    // ANPR's WAF rejects requests from Render's network, so production
+    // overrides these with copies the weekly GitHub workflow mirrors
+    // to the `anpr-sources` release (see render.yaml).
     'sources' => [
-        'municipalities' => 'https://www.anagrafenazionale.interno.it/wp-content/uploads/ANPR_archivio_comuni.csv',
-        'countries' => 'https://www.anagrafenazionale.interno.it/wp-content/uploads/tabella_2_statiesteri.xlsx',
+        'municipalities' => env('CODICEFISCALE_MUNICIPALITIES_SOURCE', 'https://www.anagrafenazionale.interno.it/wp-content/uploads/ANPR_archivio_comuni.csv'),
+        'countries' => env('CODICEFISCALE_COUNTRIES_SOURCE', 'https://www.anagrafenazionale.interno.it/wp-content/uploads/tabella_2_statiesteri.xlsx'),
     ],
 ];

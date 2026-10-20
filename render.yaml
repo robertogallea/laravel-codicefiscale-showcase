@@ -24,9 +24,3 @@ services:
         value: sync
       - key: LOG_CHANNEL
         value: stderr
-      - key: CODICEFISCALE_UPDATE_TOKEN
-        sync: false
-      - key: CODICEFISCALE_MUNICIPALITIES_SOURCE
-        value: https://github.com/robertogallea/laravel-codicefiscale-showcase/releases/download/anpr-sources/ANPR_archivio_comuni.csv
-      - key: CODICEFISCALE_COUNTRIES_SOURCE
-        value: https://github.com/robertogallea/laravel-codicefiscale-showcase/releases/download/anpr-sources/tabella_2_statiesteri.xlsx

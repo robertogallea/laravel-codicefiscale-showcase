@@ -111,3 +111,28 @@ it('registers codice-fiscale:update-places even when the app is not running in c
     expect($result->successful())->toBeTrue($result->errorOutput());
     expect($result->output())->toBe('registered');
 });
+
+it('lets the environment point codice-fiscale:update-places at mirrored sources', function () {
+    // ANPR's WAF rejects requests from Render's network, so production sets these
+    // env vars (see render.yaml) to the copies the weekly GitHub workflow mirrors.
+    // config() is already loaded in this process, so read it from a fresh one.
+    $result = Process::path(base_path())
+        ->env([
+            'CODICEFISCALE_MUNICIPALITIES_SOURCE' => 'https://mirror.test/comuni.csv',
+            'CODICEFISCALE_COUNTRIES_SOURCE' => 'https://mirror.test/stati.xlsx',
+        ])
+        ->run(['php', '-r', <<<'PHP'
+            require 'vendor/autoload.php';
+
+            $app = require 'bootstrap/app.php';
+            $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+
+            echo json_encode(config('codicefiscale.sources'));
+            PHP]);
+
+    expect($result->successful())->toBeTrue($result->errorOutput());
+    expect(json_decode($result->output(), true))->toBe([
+        'municipalities' => 'https://mirror.test/comuni.csv',
+        'countries' => 'https://mirror.test/stati.xlsx',
+    ]);
+});

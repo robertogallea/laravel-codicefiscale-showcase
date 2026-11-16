@@ -10,6 +10,9 @@ jobs:
     # ANPR's WAF rejects requests from Render's network but not from
     # GitHub's runners, so the runner fetches the sources and mirrors
     # them to a release that the Render build downloads from instead.
+    # The ISTAT sources go through the same mirror, so the build never
+    # depends on a government endpoint. Source URLs follow the package's
+    # config/codicefiscale.php `sources`.
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -28,6 +31,49 @@ jobs:
             --output tabella_2_statiesteri.xlsx \
             https://www.anagrafenazionale.interno.it/wp-content/uploads/tabella_2_statiesteri.xlsx
 
+      - name: Download the ISTAT sources
+        env:
+          SUPPRESSED_MUNICIPALITIES_URL: https://situas.istat.it/ShibO2Module/api/Report/Spool/1861-03-17/128
+          HISTORICAL_COUNTRIES_URL: https://situas-servizi.istat.it/publish/reportspooljson?pfun=469&pdata=01/01/1990
+          PAGE_SIZE: 200
+        run: |
+          # Report 128 is too large for the public endpoint, which cuts it
+          # short, so fetch it page by page the way the package's
+          # IstatPagedReport does: POST {} per page, retry a page that
+          # fails or arrives cut short, and require exactly the declared
+          # row count. The pages are merged into the {"resultset": [...]}
+          # shape the package's importer reads.
+          mkdir -p pages
+          fetch_page() {
+            for attempt in 1 2 3; do
+              if curl --fail --show-error --silent --connect-timeout 30 --max-time 120 \
+                   --request POST --header 'Content-Type: application/json' --data '{}' \
+                   --output "$2" "$SUPPRESSED_MUNICIPALITIES_URL?PageNum=$1&PageSize=$PAGE_SIZE" \
+                 && jq -e '(.totalRows | type == "number") and (.body | type == "array")' "$2" >/dev/null; then
+                return 0
+              fi
+              echo "Page $1 failed (attempt $attempt), retrying..."
+              sleep 2
+            done
+            return 1
+          }
+
+          fetch_page 1 pages/page-0001.json
+          total=$(jq '.totalRows' pages/page-0001.json)
+          pages=$(( (total + PAGE_SIZE - 1) / PAGE_SIZE ))
+          [ "$pages" -le 200 ] || { echo "Report 128 declares $total rows, too many pages"; exit 1; }
+          for page in $(seq 2 "$pages"); do
+            fetch_page "$page" "pages/page-$(printf '%04d' "$page").json"
+          done
+          jq --slurp '{resultset: (map(.body) | add)}' pages/page-*.json > ISTAT_comuni_soppressi.json
+          collected=$(jq '.resultset | length' ISTAT_comuni_soppressi.json)
+          [ "$collected" -eq "$total" ] \
+            || { echo "Report 128 collected $collected of $total rows"; exit 1; }
+
+          curl --fail --show-error --silent --retry 3 --retry-all-errors --connect-timeout 30 \
+            --output ISTAT_storico_paesi_esteri.json \
+            "$HISTORICAL_COUNTRIES_URL"
+
       - name: Sanity-check the downloads
         run: |
           # Guard against mirroring an HTML error page served with a 200.
@@ -35,15 +81,21 @@ jobs:
             || { echo "ANPR_archivio_comuni.csv doesn't look like the comuni CSV"; head -c 500 ANPR_archivio_comuni.csv; exit 1; }
           [ "$(head -c 2 tabella_2_statiesteri.xlsx)" = "PK" ] \
             || { echo "tabella_2_statiesteri.xlsx isn't an xlsx (zip) file"; exit 1; }
-          ls -l ANPR_archivio_comuni.csv tabella_2_statiesteri.xlsx
+          for report in ISTAT_comuni_soppressi.json ISTAT_storico_paesi_esteri.json; do
+            jq -e '(.resultset | type == "array") and (.resultset | length > 0)' "$report" >/dev/null \
+              || { echo "$report has no non-empty resultset"; head -c 500 "$report"; exit 1; }
+          done
+          ls -l ANPR_archivio_comuni.csv tabella_2_statiesteri.xlsx ISTAT_comuni_soppressi.json ISTAT_storico_paesi_esteri.json
 
       - name: Publish the mirror release assets
         run: |
           gh release view "$RELEASE_TAG" >/dev/null 2>&1 \
             || gh release create "$RELEASE_TAG" --latest=false \
                  --title "ANPR source mirror" \
-                 --notes "Weekly mirror of the ANPR birthplace sources, refreshed by update-codicefiscale-data.yml. Not a software release."
-          gh release upload "$RELEASE_TAG" --clobber ANPR_archivio_comuni.csv tabella_2_statiesteri.xlsx
+                 --notes "Weekly mirror of the ANPR, ISTAT and MAECI birthplace sources, refreshed by update-codicefiscale-data.yml. Not a software release."
+          gh release upload "$RELEASE_TAG" --clobber \
+            ANPR_archivio_comuni.csv tabella_2_statiesteri.xlsx \
+            ISTAT_comuni_soppressi.json ISTAT_storico_paesi_esteri.json
 
   deploy:
     # The Docker build imports the mirrored sources (see Dockerfile), so a

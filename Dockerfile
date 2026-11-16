@@ -39,10 +39,13 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/default.conf.template /etc/nginx/http.d/default.conf.template
 COPY docker/start-container /usr/local/bin/start-container
 # ANPR's WAF rejects Render's network, so import the copies the weekly
-# workflow mirrors to the anpr-sources release. ADD re-checks remote
-# content on every build, so a changed mirror invalidates the cache.
+# workflow mirrors to the anpr-sources release (ANPR, ISTAT and MAECI
+# sources). ADD re-checks remote content on every build, so a changed
+# mirror invalidates the cache.
 ADD https://github.com/robertogallea/laravel-codicefiscale-showcase/releases/download/anpr-sources/ANPR_archivio_comuni.csv \
+    https://github.com/robertogallea/laravel-codicefiscale-showcase/releases/download/anpr-sources/ISTAT_comuni_soppressi.json \
     https://github.com/robertogallea/laravel-codicefiscale-showcase/releases/download/anpr-sources/tabella_2_statiesteri.xlsx \
+    https://github.com/robertogallea/laravel-codicefiscale-showcase/releases/download/anpr-sources/ISTAT_storico_paesi_esteri.json \
     /tmp/anpr/
 
 RUN chmod +x /usr/local/bin/start-container \
@@ -51,7 +54,7 @@ RUN chmod +x /usr/local/bin/start-container \
     && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan package:discover --ansi \
     && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan migrate --force \
     && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan db:seed --class=Database\\Seeders\\ProductionDemoSeeder --force \
-    && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan codice-fiscale:import-places /tmp/anpr/ANPR_archivio_comuni.csv /tmp/anpr/tabella_2_statiesteri.xlsx \
+    && APP_ENV=production APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite php artisan codice-fiscale:import-places /tmp/anpr/ANPR_archivio_comuni.csv /tmp/anpr/ISTAT_comuni_soppressi.json /tmp/anpr/tabella_2_statiesteri.xlsx /tmp/anpr/ISTAT_storico_paesi_esteri.json \
     && rm -rf /tmp/anpr \
     && chown -R www-data:www-data bootstrap/cache database storage
 

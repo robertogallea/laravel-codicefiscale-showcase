@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1040f6a553c33fe8e1600d17b18f86ee",
+    "content-hash": "2cac0f314887dbab8ba1a77aee919325",
     "packages": [
         {
             "name": "brick/math",
@@ -3523,16 +3523,16 @@
         },
         {
             "name": "robertogallea/laravel-codicefiscale",
-            "version": "3.0.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robertogallea/laravel-codicefiscale.git",
-                "reference": "b6979d95e1ef6539daacd549874be0fe0d3e068c"
+                "reference": "c6a72ea1100aa2f9671aefd8203e3cf27631462d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robertogallea/laravel-codicefiscale/zipball/b6979d95e1ef6539daacd549874be0fe0d3e068c",
-                "reference": "b6979d95e1ef6539daacd549874be0fe0d3e068c",
+                "url": "https://api.github.com/repos/robertogallea/laravel-codicefiscale/zipball/c6a72ea1100aa2f9671aefd8203e3cf27631462d",
+                "reference": "c6a72ea1100aa2f9671aefd8203e3cf27631462d",
                 "shasum": ""
             },
             "require": {
@@ -3543,7 +3543,7 @@
             "require-dev": {
                 "fakerphp/faker": "^1.20",
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "laravel/boost": "^2.5",
+                "laravel/boost": "^2.9",
                 "orchestra/testbench": "^10.1|^11.0",
                 "pestphp/pest": "^3.0",
                 "phpstan/phpstan": "^2.0",
@@ -3578,7 +3578,7 @@
             "description": "Codice fiscale validation for php/laravel",
             "support": {
                 "issues": "https://github.com/robertogallea/laravel-codicefiscale/issues",
-                "source": "https://github.com/robertogallea/laravel-codicefiscale/tree/3.0.1"
+                "source": "https://github.com/robertogallea/laravel-codicefiscale/tree/3.2.0"
             },
             "funding": [
                 {
@@ -3586,7 +3586,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-12T10:37:00+00:00"
+            "time": "2026-11-16T14:37:24+00:00",
+            "published-time": "2026-11-16T14:37:38+00:00"
         },
         {
             "name": "symfony/clock",
@@ -11434,5 +11435,5 @@
         "php": "^8.3"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

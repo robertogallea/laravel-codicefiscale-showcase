@@ -74,9 +74,9 @@ it('shows a specific message for an unrecognized birthplace', function () {
         ->assertSeeText(__('messages.decode.errors.unknown_birth_place'));
 });
 
-it('shows a specific message for a birthplace not yet valid on the encoded date', function () {
-    // Z999 only exists from 1990 onward; year 50 resolves to 1950.
-    $code = codeFromFirst15('RSSMRA50E05Z999');
+it('shows a specific message for a birthplace that ceased before the encoded date', function () {
+    // Y001 only existed until 1950; year 55 resolves to 1955.
+    $code = codeFromFirst15('RSSMRA55E05Y001');
 
     Livewire::test(HeroTool::class)
         ->set('mode', 'decode')
@@ -84,6 +84,18 @@ it('shows a specific message for a birthplace not yet valid on the encoded date'
         ->call('decode')
         ->assertSet('decodeValid', false)
         ->assertSeeText(__('messages.decode.errors.birth_place_not_valid_on_date'));
+});
+
+it('accepts a birthplace instituted after the encoded date, as it is still attributable', function () {
+    // Z999 only exists from 1990 onward; year 50 resolves to 1950.
+    $code = codeFromFirst15('RSSMRA50E05Z999');
+
+    Livewire::test(HeroTool::class)
+        ->set('mode', 'decode')
+        ->set('decodeInput', $code)
+        ->call('decode')
+        ->assertSet('decodeValid', true)
+        ->assertSeeText('Nuova Nazione');
 });
 
 it('switches to Decode with the generated code pre-filled via "Verify this code"', function () {

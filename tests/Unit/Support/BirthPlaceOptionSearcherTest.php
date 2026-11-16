@@ -112,6 +112,18 @@ final class OrderingBirthPlaceRepository implements BirthPlaceRepository
         return $this->find($code) !== null;
     }
 
+    public function eras(BirthPlaceCode $code): array
+    {
+        $eras = array_values(array_filter(
+            $this->places,
+            fn (BirthPlace $place) => $place->code()->equals($code),
+        ));
+
+        usort($eras, fn (BirthPlace $a, BirthPlace $b) => $a->validFrom() <=> $b->validFrom());
+
+        return $eras;
+    }
+
     public function search(string $name, ?DateTimeImmutable $on = null, ?int $limit = null): array
     {
         $needle = mb_strtolower($name);
